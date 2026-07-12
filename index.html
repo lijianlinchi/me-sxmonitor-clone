@@ -87,8 +87,8 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .gooey-nav .goo-filter{z-index:1;background:var(--primary);filter:url(#gooey-filter)}
 .gooey-nav .goo-text{z-index:2;display:grid;place-items:center;color:#000;font-size:var(--fs-sm);font-weight:inherit;opacity:0;transition:transform .55s cubic-bezier(.22,1,.36,1),width .55s cubic-bezier(.22,1,.36,1),height .55s cubic-bezier(.22,1,.36,1),opacity .25s ease}
 .gooey-nav .goo-text.is-active{opacity:1}
-.goo-particle{position:absolute;top:50%;left:50%;display:block;width:18px;height:18px;border-radius:50%;background:var(--p-color,var(--primary));transform:translate(-50%,-50%) scale(.9);mix-blend-mode:screen;animation:goo-fly 900ms cubic-bezier(.22,1,.36,1) forwards}
-@keyframes goo-fly{0%{opacity:.95;transform:translate(-50%,-50%) scale(.9)}70%{opacity:.6;transform:translate(calc(-50% + var(--dx,0px)),calc(-50% + var(--dy,0px))) scale(.55)}100%{opacity:0;transform:translate(calc(-50% + var(--dx,0px)),calc(-50% + var(--dy,0px))) scale(.1)}}
+.goo-particle{position:absolute;top:50%;left:50%;display:block;width:8px;height:8px;border-radius:50%;background:var(--p-color,var(--primary));transform:translate(-50%,-50%) scale(.6);animation:goo-fly 700ms cubic-bezier(.22,1,.36,1) forwards}
+@keyframes goo-fly{0%{opacity:1;transform:translate(-50%,-50%) scale(.6)}100%{opacity:0;transform:translate(calc(-50% + var(--dx,0px)),calc(-50% + var(--dy,0px))) scale(.2)}}
 .nav-cta{padding:9px 20px;background:var(--primary);color:#000 !important;border-radius:999px;font-weight:700;font-size:var(--fs-sm);transition:background 0.2s,box-shadow 0.2s,transform 0.25s cubic-bezier(0.22,1,0.36,1);box-shadow:0 2px 16px var(--primary-glow);will-change:transform}
 .nav-cta:hover{background:var(--primary-dark);box-shadow:0 4px 24px var(--primary-glow)}
 
@@ -389,8 +389,8 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
       <filter id="gooey-filter" x="-100%" y="-100%" width="300%" height="300%">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur" />
-        <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -12" result="goo" />
+        <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+        <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10" result="goo" />
         <feBlend in="SourceGraphic" in2="goo" />
       </filter>
     </defs>
@@ -1504,12 +1504,11 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
         Array.prototype.slice.call(filterEl.querySelectorAll('.goo-particle')).forEach(function (particle) {
           particle.remove();
         });
-        var count = 16;
-        var travel = 36;
+        var count = 12;
         for (var i = 0; i < count; i++) {
           var particle = document.createElement('span');
           var angle = (Math.PI * 2 * i) / count + (Math.random() - .5) * .6;
-          var distance = travel + Math.random() * 26;
+          var distance = 18 + Math.random() * 22;
           particle.className = 'goo-particle';
           particle.style.setProperty('--dx', (Math.cos(angle) * distance).toFixed(1) + 'px');
           particle.style.setProperty('--dy', (Math.sin(angle) * distance).toFixed(1) + 'px');
