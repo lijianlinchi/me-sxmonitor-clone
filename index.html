@@ -126,6 +126,116 @@ html.js-ready .hero-copy .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.2
 .hero-title em{font-style:normal;color:var(--primary);position:relative;display:inline-block}
 .hero-title em::after{content:"";position:absolute;left:0;right:0;bottom:0.06em;height:0.14em;border-radius:2px;background:linear-gradient(90deg,var(--primary),oklch(0.918 0.182 102 / 0.2));transform:scaleX(0);transform-origin:left center;animation:title-underline 0.8s cubic-bezier(0.22,1,0.36,1) forwards;animation-delay:0.72s}
 .hero-slogan{font-size:var(--fs-lg);color:var(--ink-muted);margin-bottom:40px;max-width:480px;line-height:var(--leading-relaxed)}
+
+/* ========== BorderGlow (vanilla port, huang scheme) ========== */
+.border-glow-card{
+  --edge-proximity:0;
+  --cursor-angle:45deg;
+  --edge-sensitivity:30;
+  --color-sensitivity:calc(var(--edge-sensitivity) + 20);
+  --border-radius:16px;
+  --glow-padding:40px;
+  --cone-spread:25;
+  --fill-opacity:.5;
+  --card-bg:transparent;
+  --gradient-one:radial-gradient(at 80% 55%, #FACC15 0px, transparent 50%);
+  --gradient-two:radial-gradient(at 69% 34%, #F59E0B 0px, transparent 50%);
+  --gradient-three:radial-gradient(at 8% 6%, #FBBF24 0px, transparent 50%);
+  --gradient-four:radial-gradient(at 41% 38%, #FACC15 0px, transparent 50%);
+  --gradient-five:radial-gradient(at 86% 85%, #F59E0B 0px, transparent 50%);
+  --gradient-six:radial-gradient(at 82% 18%, #FBBF24 0px, transparent 50%);
+  --gradient-seven:radial-gradient(at 51% 4%, #FACC15 0px, transparent 50%);
+  --gradient-base:linear-gradient(#FACC15 0 100%);
+  --glow-color:oklch(0.918 0.182 102 / 100%);
+  --glow-color-60:oklch(0.918 0.182 102 / 60%);
+  --glow-color-50:oklch(0.918 0.182 102 / 50%);
+  --glow-color-40:oklch(0.918 0.182 102 / 40%);
+  --glow-color-30:oklch(0.918 0.182 102 / 30%);
+  --glow-color-20:oklch(0.918 0.182 102 / 20%);
+  --glow-color-10:oklch(0.918 0.182 102 / 10%);
+  position:relative;
+  border-radius:var(--border-radius);
+  isolation:isolate;
+  transform:translate3d(0,0,.01px);
+  display:grid;
+  border:1px solid transparent;
+  background:transparent;
+  overflow:visible;
+}
+.border-glow-card.is-inline{display:inline-flex}
+.border-glow-card.is-block{display:block}
+.border-glow-card.is-rounded{--border-radius:999px}
+.border-glow-card::before,
+.border-glow-card::after,
+.border-glow-card>.edge-light{content:"";position:absolute;inset:0;border-radius:inherit;transition:opacity .25s ease-out;pointer-events:none;z-index:-1}
+.border-glow-card:not(:hover):not(.sweep-active)::before,
+.border-glow-card:not(:hover):not(.sweep-active)::after,
+.border-glow-card:not(:hover):not(.sweep-active)>.edge-light{opacity:0;transition:opacity .75s ease-in-out}
+.border-glow-card::before{border:1px solid transparent;
+  background:
+    linear-gradient(var(--card-bg,transparent) 0 100%) padding-box,
+    linear-gradient(rgb(255 255 255 / 0%) 0% 100%) border-box,
+    var(--gradient-one) border-box,
+    var(--gradient-two) border-box,
+    var(--gradient-three) border-box,
+    var(--gradient-four) border-box,
+    var(--gradient-five) border-box,
+    var(--gradient-six) border-box,
+    var(--gradient-seven) border-box,
+    var(--gradient-base) border-box;
+  opacity:calc(max(0,(var(--edge-proximity) - var(--color-sensitivity))/(100 - var(--color-sensitivity))));
+  mask-image:conic-gradient(from var(--cursor-angle) at center, black calc(var(--cone-spread)*1%), transparent calc((var(--cone-spread) + 15)*1%), transparent calc((100 - var(--cone-spread) - 15)*1%), black calc((100 - var(--cone-spread))*1%))
+}
+.border-glow-card::after{border:1px solid transparent;
+  background:
+    var(--gradient-one) padding-box,
+    var(--gradient-two) padding-box,
+    var(--gradient-three) padding-box,
+    var(--gradient-four) padding-box,
+    var(--gradient-five) padding-box,
+    var(--gradient-six) padding-box,
+    var(--gradient-seven) padding-box,
+    var(--gradient-base) padding-box;
+  mask-image:
+    linear-gradient(to bottom, black, black),
+    radial-gradient(ellipse at 50% 50%, black 40%, transparent 65%),
+    radial-gradient(ellipse at 66% 66%, black 5%, transparent 40%),
+    radial-gradient(ellipse at 33% 33%, black 5%, transparent 40%),
+    radial-gradient(ellipse at 66% 33%, black 5%, transparent 40%),
+    radial-gradient(ellipse at 33% 66%, black 5%, transparent 40%),
+    conic-gradient(from var(--cursor-angle) at center, transparent 5%, black 15%, black 85%, transparent 95%);
+  mask-composite:subtract,add,add,add,add,add;
+  opacity:calc(var(--fill-opacity,.5) * max(0,(var(--edge-proximity) - var(--color-sensitivity))/(100 - var(--color-sensitivity))));
+  mix-blend-mode:soft-light
+}
+.border-glow-card>.edge-light{inset:calc(var(--glow-padding)*-1);z-index:1;
+  mask-image:conic-gradient(from var(--cursor-angle) at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%);
+  opacity:calc(max(0,(var(--edge-proximity) - var(--edge-sensitivity))/(100 - var(--edge-sensitivity))));
+  mix-blend-mode:plus-lighter}
+.border-glow-card>.edge-light::before{content:"";position:absolute;inset:var(--glow-padding);border-radius:inherit;
+  box-shadow:
+    inset 0 0 0 1px var(--glow-color),
+    inset 0 0 1px 0 var(--glow-color-60),
+    inset 0 0 3px 0 var(--glow-color-50),
+    inset 0 0 6px 0 var(--glow-color-40),
+    inset 0 0 15px 0 var(--glow-color-30),
+    inset 0 0 25px 2px var(--glow-color-20),
+    inset 0 0 50px 2px var(--glow-color-10),
+    0 0 1px 0 var(--glow-color-60),
+    0 0 3px 0 var(--glow-color-50),
+    0 0 6px 0 var(--glow-color-40),
+    0 0 15px 0 var(--glow-color-30),
+    0 0 25px 2px var(--glow-color-20),
+    0 0 50px 2px var(--glow-color-10)
+}
+.cta-glow.border-glow-card{--card-bg:transparent;padding:0;border:0}
+.cta-glow.border-glow-card>.btn-primary{position:relative;z-index:1}
+.btn-cta{padding:15px 32px;background:var(--primary);color:#000;font-size:var(--fs-base);font-weight:700;border:none;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 24px var(--primary-glow);will-change:transform;transition:background .2s,transform .25s cubic-bezier(.22,1,.36,1),box-shadow .2s}
+.btn-cta:hover{background:var(--primary-dark);box-shadow:0 6px 32px var(--primary-glow)}
+.btn-cta>.btn-cta-text{position:relative;z-index:1}
+@media (hover:none),(pointer:coarse){
+  .border-glow-card::before,.border-glow-card::after,.border-glow-card>.edge-light{display:none !important}
+}
 .hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .btn-primary{display:inline-flex;align-items:center;padding:15px 32px;background:var(--primary);color:#000;font-size:var(--fs-base);font-weight:700;border:none;border-radius:999px;cursor:pointer;transition:background 0.2s,transform 0.25s cubic-bezier(0.22,1,0.36,1),box-shadow 0.2s;box-shadow:0 4px 24px var(--primary-glow);will-change:transform}
 .btn-primary:hover{background:var(--primary-dark);box-shadow:0 6px 32px var(--primary-glow)}
@@ -451,14 +561,18 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
             钉钉秒级推送 · 手机端任务启停 · 分段价格筛选 · 一键锁单不漏单。把守全天，把窗口抢在别人前面。
           </p>
           <div class="hero-actions hero-enter" style="--enter-i:4">
-            <a class="btn-primary magnetic" href="#contact">获取激活码</a>
+            <a class="border-glow-card is-rounded btn-cta magnetic" href="#contact">
+              <span class="edge-light"></span>
+              <span class="btn-cta-text">获取激活码</span>
+            </a>
             <a class="btn-ghost magnetic" href="#pricing">查看电脑版</a>
           </div>
 
           <div class="hero-metrics hero-enter" style="--enter-i:5" aria-label="核心指标">
-            <div class="hero-metrics-item">
+            <div class="hero-metrics-item border-glow-card is-block">
               <strong>3s</strong>
               <span>轮询间隔</span>
+              <span class="edge-light"></span>
             </div>
             <div class="hero-metrics-item">
               <strong>3+</strong>
@@ -1674,6 +1788,58 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
       startFrame();
     }
     initPhoneTilt();
+
+    // BorderGlow: pointer-driven reactive border (vanilla port)
+    function setupBorderGlow() {
+      var cards = document.querySelectorAll(".border-glow-card");
+      if (!cards.length) return;
+      var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+      if (!finePointer) return;
+      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      for (var i = 0; i < cards.length; i++) {
+        (function (card) {
+          var raf = 0;
+          card.addEventListener("pointermove", function (e) {
+            if (raf) return;
+            raf = requestAnimationFrame(function () {
+              raf = 0;
+              var r = card.getBoundingClientRect();
+              var x = e.clientX - r.left, y = e.clientY - r.top;
+              var cx = r.width / 2, cy = r.height / 2;
+              var dx = x - cx, dy = y - cy;
+              var kx = dx !== 0 ? cx / Math.abs(dx) : Infinity;
+              var ky = dy !== 0 ? cy / Math.abs(dy) : Infinity;
+              var prox = Math.min(Math.max(1 / Math.min(kx, ky), 0), 1);
+              var ang = (dx === 0 && dy === 0) ? 0 : Math.atan2(dy, dx) * 180 / Math.PI + 90;
+              if (ang < 0) ang += 360;
+              card.style.setProperty("--edge-proximity", (prox * 100).toFixed(2));
+              card.style.setProperty("--cursor-angle", ang.toFixed(2) + "deg");
+            });
+          });
+          card.addEventListener("pointerleave", function () {
+            card.style.setProperty("--edge-proximity", "0");
+          });
+          if (!reduceMotion) {
+            card.classList.add("sweep-active");
+            card.style.setProperty("--cursor-angle", "110deg");
+            var t0 = performance.now();
+            var dur = 1800;
+            (function tick() {
+              var e = Math.min((performance.now() - t0) / dur, 1);
+              var eased = 1 - Math.pow(1 - e, 3);
+              card.style.setProperty("--cursor-angle", (110 + (465 - 110) * eased).toFixed(2) + "deg");
+              card.style.setProperty("--edge-proximity", (eased * 100).toFixed(2));
+              if (e < 1) requestAnimationFrame(tick);
+              else {
+                card.style.setProperty("--edge-proximity", "0");
+                card.classList.remove("sweep-active");
+              }
+            })();
+          }
+        })(cards[i]);
+      }
+    }
+    setupBorderGlow();
   })();
   </script></body>
 </html>
