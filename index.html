@@ -117,6 +117,8 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .hero-band-foot{height:1px;background:linear-gradient(90deg,transparent,oklch(1 0 0 / 0.08),transparent);position:relative;z-index:1}
 .hero{position:relative;padding-top:calc(var(--header-h) + 72px);padding-bottom:48px}
 .hero-grid{display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:center}
+.hero-platforms{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;padding:0;list-style:none}
+.hero-platforms-item{display:inline-flex;align-items:center;padding:6px 14px;border:1px solid oklch(1 0 0 / 0.10);border-radius:999px;background:oklch(1 0 0 / 0.04);font-size:var(--fs-sm);font-weight:600;letter-spacing:0.04em;color:#fff}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;background:var(--primary-soft);border:1px solid oklch(0.918 0.182 102 / 0.22);border-radius:999px;font-size:var(--fs-sm);font-weight:600;color:var(--primary);margin-bottom:28px}
 .hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:badge-pulse 2.4s ease-in-out infinite}
 html.js-ready .hero-copy .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1) both;animation-delay:calc(0.12s + var(--enter-i,0) * 0.11s)}
@@ -437,19 +439,23 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
             <span class="hero-badge-dot" aria-hidden="true"></span>
             实时监控 · 已上线 v2.0.8
           </span>
-          <h1 class="hero-title hero-enter" style="--enter-i:1">
-            闲鱼 / 转转 / Goofish<br/>
+          <ul class="hero-platforms hero-enter" style="--enter-i:1" aria-label="覆盖平台">
+            <li class="hero-platforms-item">闲鱼</li>
+            <li class="hero-platforms-item">转转</li>
+            <li class="hero-platforms-item">Goofish</li>
+          </ul>
+          <h1 class="hero-title hero-enter" style="--enter-i:2">
             <em>3 秒</em>级实时上新监控
           </h1>
-          <p class="hero-slogan hero-enter" style="--enter-i:2">
+          <p class="hero-slogan hero-enter" style="--enter-i:3">
             钉钉秒级推送 · 手机端任务启停 · 分段价格筛选 · 一键锁单不漏单。把守全天，把窗口抢在别人前面。
           </p>
-          <div class="hero-actions hero-enter" style="--enter-i:3">
+          <div class="hero-actions hero-enter" style="--enter-i:4">
             <a class="btn-primary magnetic" href="#contact">获取激活码</a>
             <a class="btn-ghost magnetic" href="#pricing">查看电脑版</a>
           </div>
 
-          <div class="hero-metrics hero-enter" style="--enter-i:4" aria-label="核心指标">
+          <div class="hero-metrics hero-enter" style="--enter-i:5" aria-label="核心指标">
             <div class="hero-metrics-item">
               <strong>3s</strong>
               <span>轮询间隔</span>
