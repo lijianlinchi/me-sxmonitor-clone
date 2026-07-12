@@ -137,14 +137,14 @@ html.js-ready .hero-copy .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.2
   --glow-padding:40px;
   --cone-spread:25;
   --fill-opacity:.5;
-  --card-bg:transparent;
-  --gradient-one:radial-gradient(at 80% 55%, #FACC15 0px, transparent 50%);
-  --gradient-two:radial-gradient(at 69% 34%, #F59E0B 0px, transparent 50%);
-  --gradient-three:radial-gradient(at 8% 6%, #FBBF24 0px, transparent 50%);
-  --gradient-four:radial-gradient(at 41% 38%, #FACC15 0px, transparent 50%);
-  --gradient-five:radial-gradient(at 86% 85%, #F59E0B 0px, transparent 50%);
-  --gradient-six:radial-gradient(at 82% 18%, #FBBF24 0px, transparent 50%);
-  --gradient-seven:radial-gradient(at 51% 4%, #FACC15 0px, transparent 50%);
+  --card-bg:#13110f;
+  --gradient-one:radial-gradient(at 80% 55%, #FFE066 0px, transparent 50%);
+  --gradient-two:radial-gradient(at 69% 34%, #FACC15 0px, transparent 50%);
+  --gradient-three:radial-gradient(at 8% 6%, #FDE68A 0px, transparent 50%);
+  --gradient-four:radial-gradient(at 41% 38%, #FCD34D 0px, transparent 50%);
+  --gradient-five:radial-gradient(at 86% 85%, #D97706 0px, transparent 50%);
+  --gradient-six:radial-gradient(at 82% 18%, #F59E0B 0px, transparent 50%);
+  --gradient-seven:radial-gradient(at 51% 4%, #FBBF24 0px, transparent 50%);
   --gradient-base:linear-gradient(#FACC15 0 100%);
   --glow-color:oklch(0.918 0.182 102 / 100%);
   --glow-color-60:oklch(0.918 0.182 102 / 60%);
@@ -161,6 +161,10 @@ html.js-ready .hero-copy .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.2
   border:1px solid transparent;
   background:transparent;
   overflow:visible;
+  box-shadow:
+    rgba(0,0,0,.22) 0 1px 2px,
+    rgba(0,0,0,.14) 0 8px 24px,
+    rgba(0,0,0,.08) 0 24px 48px;
 }
 .border-glow-card.is-inline{display:inline-flex}
 .border-glow-card.is-block{display:block}
@@ -228,7 +232,7 @@ html.js-ready .hero-copy .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.2
     0 0 25px 2px var(--glow-color-20),
     0 0 50px 2px var(--glow-color-10)
 }
-.cta-glow.border-glow-card{--card-bg:transparent;padding:0;border:0}
+.cta-glow.border-glow-card{--card-bg:transparent;padding:0;border:0;box-shadow:none}
 .cta-glow.border-glow-card>.btn-primary{position:relative;z-index:1}
 .btn-cta{padding:15px 32px;background:var(--primary);color:#000;font-size:var(--fs-base);font-weight:700;border:none;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 24px var(--primary-glow);will-change:transform;transition:background .2s,transform .25s cubic-bezier(.22,1,.36,1),box-shadow .2s}
 .btn-cta:hover{background:var(--primary-dark);box-shadow:0 6px 32px var(--primary-glow)}
@@ -375,6 +379,7 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
 .steps{padding-top:clamp(80px,9vw,120px);padding-bottom:clamp(80px,9vw,120px)}
 .steps-head{margin-bottom:clamp(40px,5vw,64px)}
 .steps-list{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;counter-reset:step}
+.step-item.border-glow-card>.step-num,.step-item.border-glow-card>div{position:relative;z-index:1}
 .step-item{counter-increment:step;display:grid;grid-template-columns:64px 1fr;gap:20px;align-items:start;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);transition:border-color 0.3s ease,transform 0.3s ease}
 .step-item:hover{border-color:var(--border-strong);transform:translateY(-2px)}
 .step-num{font-family:var(--font-mono);font-size:var(--fs-2xl);font-weight:800;color:var(--primary);letter-spacing:-0.02em;line-height:1}
@@ -569,7 +574,7 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
           </div>
 
           <div class="hero-metrics hero-enter" style="--enter-i:5" aria-label="核心指标">
-            <div class="hero-metrics-item border-glow-card is-block">
+            <div class="hero-metrics-item border-glow-card is-block" style="--card-bg:oklch(1 0 0 / 0.02)">
               <strong>3s</strong>
               <span>轮询间隔</span>
               <span class="edge-light"></span>
@@ -823,33 +828,37 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
       <p class="section-desc">不需要技术背景,激活后跟着步骤走,十分钟内就能跑起来。</p>
     </header>
     <ol class="steps-list" role="list">
-      <li class="step-item reveal">
+      <li class="step-item reveal border-glow-card is-block" style="--card-bg:var(--surface)">
         <div class="step-num" aria-hidden="true"></div>
         <div>
           <h3 class="step-title">添加平台账号</h3>
           <p class="step-desc">扫码登录闲鱼 / 转转 / Goofish 账号,支持多账号并行监控。</p>
         </div>
+      <span class="edge-light"></span>
       </li>
-      <li class="step-item reveal">
+      <li class="step-item reveal border-glow-card is-block" style="--card-bg:var(--surface)">
         <div class="step-num" aria-hidden="true"></div>
         <div>
           <h3 class="step-title">设置价格区间与关键词</h3>
           <p class="step-desc">按品类分档设价,加上想要的关键词组合;只推送真正想看的命中。</p>
         </div>
+      <span class="edge-light"></span>
       </li>
-      <li class="step-item reveal">
+      <li class="step-item reveal border-glow-card is-block" style="--card-bg:var(--surface)">
         <div class="step-num" aria-hidden="true"></div>
         <div>
           <h3 class="step-title">启动实时监控</h3>
           <p class="step-desc">任务从后台启动,3 秒间隔扫描新发布;命中即触发钉钉推送。</p>
         </div>
+      <span class="edge-light"></span>
       </li>
-      <li class="step-item reveal">
+      <li class="step-item reveal border-glow-card is-block" style="--card-bg:var(--surface)">
         <div class="step-num" aria-hidden="true"></div>
         <div>
           <h3 class="step-title">钉钉秒推 · 手机端响应</h3>
           <p class="step-desc">钉钉卡片直接点开,手机上完成锁单 / 暂停 / 启停;窗口期内搞定。</p>
         </div>
+      <span class="edge-light"></span>
       </li>
     </ol>
   </section>

@@ -13,3 +13,7 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# Local tooling
+node_modules/
+.tmp/
