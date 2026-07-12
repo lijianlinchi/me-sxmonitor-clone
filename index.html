@@ -70,6 +70,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .header-inner{max-width:var(--max-w);margin:0 auto;padding:0 clamp(28px,5vw,56px);height:100%;display:flex;align-items:center;justify-content:space-between}
 .brand{display:flex;align-items:center;gap:10px}
 .brand-mark{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#000;box-shadow:0 2px 12px var(--primary-glow)}
+.brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
 .brand-name{font-size:var(--fs-base);font-weight:700;letter-spacing:0.03em;color:#fff}
 .nav{display:flex;align-items:center;gap:28px}
 .nav a{font-size:var(--fs-sm);color:var(--ink-muted);transition:color 0.2s ease}
@@ -374,7 +375,7 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
   <header class="header header--hero" id="header">
     <div class="header-inner">
       <a class="brand" href="#top" aria-label="上新监控 · 首页">
-        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="上新监控 brand mark"><path fill="#FF6B1A" d="M18 3 L21.5 7 L19.5 7.5 L19 9 L17 9 L16.5 7.5 L14.5 7 Z"/><rect fill="currentColor" x="7.5" y="12" width="21" height="3.6" rx="1.8"/><rect fill="currentColor" x="16.2" y="15.6" width="3.6" height="8.4" rx="1.8"/><rect fill="currentColor" x="7.5" y="24" width="21" height="3.6" rx="1.8"/></svg></span>
+        <span class="brand-mark" aria-hidden="true"><img src="assets/logo.png" alt="" /></span>
         <span class="brand-name">上新监控</span>
       </a>
       <nav class="nav" aria-label="主导航">
