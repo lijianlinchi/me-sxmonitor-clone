@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#0A0B0F"/>
+<meta name="description" content="上新监控 · 闲鱼 / 转转 / Goofish 多平台 3 秒级实时监控 · 钉钉秒推 · 手机端任务启停 · 分段价格筛选 · 一键锁单"/>
+<meta property="og:title" content="上新监控 · 实时二手监控"/>
+<meta property="og:description" content="专业二手监控 · 分段定价 · 秒拍锁单 · 钉钉即时触达"/>
+<title>上新监控 · 实时二手监控</title>
+<style>/* =============================================================
+   RESET + TOKENS + BASE
+   ============================================================= */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* Palette (OKLCH) */
+  --bg:oklch(0.122 0.014 264);
+  --surface:oklch(0.165 0.013 263);
+  --surface-elevated:oklch(0.205 0.012 262);
+  --ink:oklch(0.940 0.005 250);
+  --ink-muted:oklch(0.780 0.008 250);
+  --ink-subtle:oklch(0.620 0.010 250);
+  --primary:oklch(0.918 0.182 102);
+  --primary-soft:oklch(0.918 0.182 102 / 0.12);
+  --primary-glow:oklch(0.918 0.182 102 / 0.35);
+  --primary-dark:oklch(0.860 0.165 102);
+  --accent:oklch(0.700 0.150 30);
+  --border:oklch(1 0 0 / 0.08);
+  --border-strong:oklch(1 0 0 / 0.14);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.25);
+  --shadow-md:0 12px 40px rgba(0,0,0,.35);
+  --shadow-lg:0 24px 64px rgba(0,0,0,.45);
+  --shadow-glow:0 0 80px oklch(0.918 0.182 102 / 0.12);
+  /* Typography */
+  --font-sans:"Inter Variable","Inter",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono","SF Mono",ui-monospace,monospace;
+  --fs-xs:.8125rem;
+  --fs-sm:.9375rem;
+  --fs-base:1.0625rem;
+  --fs-lg:1.1875rem;
+  --fs-xl:1.375rem;
+  --fs-2xl:1.6875rem;
+  --fs-h3:clamp(1.875rem,3.2vw,2.625rem);
+  --fs-h2:clamp(2.25rem,4vw,3.25rem);
+  --fs-h1:clamp(2.625rem,5.6vw,3.75rem);
+  --leading-tight:1.25;
+  --leading-snug:1.45;
+  --leading-normal:1.65;
+  --leading-relaxed:1.85;
+  /* Spacing + radius */
+  --radius:14px;
+  --radius-lg:20px;
+  --max-w:1120px;
+  --header-h:72px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 16px);font-size:16px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--ink);font-size:var(--fs-base);line-height:var(--leading-normal);-webkit-font-smoothing:antialiased;font-feature-settings:"kern" 1}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:6px}
+::selection{background:var(--primary);color:#000}/* =============================================================
+   SCROLL PROGRESS + HEADER
+   ============================================================= */
+.scroll-progress{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none}
+.scroll-progress-bar{height:100%;width:100%;background:linear-gradient(90deg,var(--primary),var(--primary-dark));transform-origin:left center;transform:scaleX(0);transition:transform 0.12s ease-out}
+.header{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--header-h);transition:background 0.3s ease,border-color 0.3s ease,box-shadow 0.3s ease}
+.header--hero{background:oklch(0.122 0.014 264 / 0.55);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid oklch(1 0 0 / 0.06)}
+.header--solid{background:oklch(0.122 0.014 264 / 0.92);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid var(--border);box-shadow:0 4px 24px rgba(0,0,0,.35)}
+.header-inner{max-width:var(--max-w);margin:0 auto;padding:0 clamp(28px,5vw,56px);height:100%;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#000;box-shadow:0 2px 12px var(--primary-glow)}
+.brand-name{font-size:var(--fs-base);font-weight:700;letter-spacing:0.03em;color:#fff}
+.nav{display:flex;align-items:center;gap:28px}
+.nav a{font-size:var(--fs-sm);color:var(--ink-muted);transition:color 0.2s ease}
+.nav a:hover{color:#fff}
+.nav-cta{padding:9px 20px;background:var(--primary);color:#000 !important;border-radius:999px;font-weight:700;font-size:var(--fs-sm);transition:background 0.2s,box-shadow 0.2s,transform 0.25s cubic-bezier(0.22,1,0.36,1);box-shadow:0 2px 16px var(--primary-glow);will-change:transform}
+.nav-cta:hover{background:var(--primary-dark);box-shadow:0 4px 24px var(--primary-glow)}
+
+/* =============================================================
+   SECTION COMMON
+   ============================================================= */
+.section{max-width:var(--max-w);margin:0 auto;padding-left:clamp(28px,5vw,56px);padding-right:clamp(28px,5vw,56px)}
+.section-shell{padding-top:96px;padding-bottom:96px}
+.section-panel{background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--radius-lg);padding:clamp(36px,5vw,52px);box-shadow:var(--shadow-sm)}
+.section-label{display:inline-flex;align-items:center;gap:10px;font-size:var(--fs-xs);font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-subtle);margin-bottom:16px}
+.section-label::before{content:"";width:20px;height:2px;background:var(--primary);border-radius:1px}
+.section-title{font-size:var(--fs-h3);font-weight:800;line-height:var(--leading-tight);letter-spacing:-0.03em;margin-bottom:20px;color:#F2F3F5;text-wrap:balance}
+.section-desc{font-size:var(--fs-lg);color:var(--ink-muted);max-width:620px;line-height:var(--leading-relaxed);text-wrap:pretty}/* =============================================================
+   HERO BAND + HERO
+   ============================================================= */
+.hero-band{position:relative;background:var(--bg);color:#fff;overflow:hidden}
+.hero-band-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 20%,oklch(0.918 0.182 102 / 0.10) 0%,transparent 55%),radial-gradient(ellipse 50% 40% at 10% 80%,oklch(0.918 0.182 102 / 0.06) 0%,transparent 50%),linear-gradient(165deg,oklch(0.115 0.014 264) 0%,oklch(0.135 0.015 263) 45%,oklch(0.122 0.014 264) 100%);pointer-events:none;will-change:transform}
+.hero-band-grid{position:absolute;inset:0;background-image:linear-gradient(oklch(1 0 0 / 0.04) 1px,transparent 1px),linear-gradient(90deg,oklch(1 0 0 / 0.04) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.6) 0%,rgba(0,0,0,.3) 70%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.6) 0%,rgba(0,0,0,.3) 70%,transparent 100%);pointer-events:none;will-change:transform}
+.hero-band-orbs{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:0.6;will-change:transform}
+.hero-orb--1{width:420px;height:420px;top:-8%;right:8%;background:radial-gradient(circle,oklch(0.918 0.182 102 / 0.22) 0%,transparent 68%);animation:orb-drift-1 18s ease-in-out infinite}
+.hero-orb--2{width:320px;height:320px;bottom:6%;left:-4%;background:radial-gradient(circle,oklch(0.918 0.182 102 / 0.14) 0%,transparent 70%);animation:orb-drift-2 22s ease-in-out infinite}
+.hero-band .section-label{color:var(--ink-subtle)}
+.hero-band .section-title{color:#fff}
+.hero-band .section-desc{color:var(--ink-muted)}
+.hero-band-foot{height:1px;background:linear-gradient(90deg,transparent,oklch(1 0 0 / 0.08),transparent);position:relative;z-index:1}
+.hero{position:relative;padding-top:calc(var(--header-h) + 72px);padding-bottom:48px}
+.hero-grid{display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;background:var(--primary-soft);border:1px solid oklch(0.918 0.182 102 / 0.22);border-radius:999px;font-size:var(--fs-sm);font-weight:600;color:var(--primary);margin-bottom:28px}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:badge-pulse 2.4s ease-in-out infinite}
+html.js-ready .hero-copy .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1) both;animation-delay:calc(0.12s + var(--enter-i,0) * 0.11s)}
+.hero-title{font-size:var(--fs-h1);font-weight:800;line-height:1.1;letter-spacing:-0.04em;margin-bottom:24px;color:#fff;text-wrap:balance}
+.hero-title em{font-style:normal;color:var(--primary);position:relative;display:inline-block}
+.hero-title em::after{content:"";position:absolute;left:0;right:0;bottom:0.06em;height:0.14em;border-radius:2px;background:linear-gradient(90deg,var(--primary),oklch(0.918 0.182 102 / 0.2));transform:scaleX(0);transform-origin:left center;animation:title-underline 0.8s cubic-bezier(0.22,1,0.36,1) forwards;animation-delay:0.72s}
+.hero-slogan{font-size:var(--fs-lg);color:var(--ink-muted);margin-bottom:40px;max-width:480px;line-height:var(--leading-relaxed)}
+.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;padding:15px 32px;background:var(--primary);color:#000;font-size:var(--fs-base);font-weight:700;border:none;border-radius:999px;cursor:pointer;transition:background 0.2s,transform 0.25s cubic-bezier(0.22,1,0.36,1),box-shadow 0.2s;box-shadow:0 4px 24px var(--primary-glow);will-change:transform}
+.btn-primary:hover{background:var(--primary-dark);box-shadow:0 6px 32px var(--primary-glow)}
+.btn-primary:active{transform:scale(0.98)}
+.btn-ghost{display:inline-flex;align-items:center;padding:15px 24px;background:transparent;color:var(--ink-muted);font-size:var(--fs-base);font-weight:500;border:1px solid var(--border-strong);border-radius:999px;cursor:pointer;transition:color 0.2s,border-color 0.2s,background 0.2s}
+.btn-ghost:hover{color:#fff;border-color:oklch(1 0 0 / 0.28);background:oklch(1 0 0 / 0.04)}
+.hero-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:64px;background:oklch(1 0 0 / 0.06);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.hero-metrics-item{padding:28px 24px;background:oklch(1 0 0 / 0.02);text-align:center}
+.hero-metrics-item strong{display:block;font-size:var(--fs-xl);font-weight:800;color:var(--primary);letter-spacing:-0.02em;margin-bottom:6px;font-family:var(--font-mono);transition:text-shadow 0.3s ease,transform 0.3s ease}
+.hero-metrics-item:hover strong{text-shadow:0 0 24px var(--primary-glow);transform:translateY(-2px)}
+.hero-metrics-item span{font-size:var(--fs-sm);color:var(--ink-subtle);font-weight:500}/* =============================================================
+   PHONE MOCKUP (scenes 1 + 2)
+   ============================================================= */
+.phone-wrap{position:relative;display:flex;justify-content:center;width:100%;perspective:1200px;-webkit-perspective:1200px}
+.phone-scene{position:relative;width:290px;max-width:100%;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;animation:phone-float 6s ease-in-out infinite}
+.phone-wrap.is-active .phone-scene{animation:none}
+.phone-glow{position:absolute;width:360px;height:360px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,var(--primary-glow) 0%,transparent 65%);pointer-events:none;transition:transform 0.35s ease,opacity 0.35s ease;z-index:0}
+.phone-wrap.is-active .phone-glow{opacity:1.15}
+.phone-wrap.is-idle-tilt .phone-glow{opacity:1.05}
+.phone-wrap.is-idle-tilt .phone-shine{opacity:0.65}
+.phone{position:relative;z-index:1;width:100%;background:#1A1D26;border-radius:36px;border:1px solid var(--border-strong);box-shadow:0 24px 64px rgba(0,0,0,.45),0 0 60px var(--primary-glow);overflow:hidden;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;will-change:transform;transition:transform 0.45s cubic-bezier(0.23,1,0.32,1),box-shadow 0.35s ease}
+.phone-wrap.is-active .phone{box-shadow:0 32px 80px rgba(0,0,0,.55),0 0 80px oklch(0.918 0.182 102 / 0.22)}
+.phone-shine{position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:5;opacity:0;background:linear-gradient(115deg,transparent 35%,oklch(1 0 0 / 0.07) 45%,oklch(1 0 0 / 0.14) 50%,oklch(1 0 0 / 0.07) 55%,transparent 65%);transition:opacity 0.35s ease;background-size:300% 300%;background-position:58% 38%}
+.phone-wrap.is-active .phone-shine{opacity:1}
+.phone-notch{height:28px;background:#1A1D26;display:flex;align-items:center;justify-content:center}
+.phone-notch-bar{width:80px;height:6px;background:oklch(1 0 0 / 0.12);border-radius:999px}
+.phone-screen{padding:16px 18px 20px;background:#12151C;overflow:hidden;width:100%;box-sizing:border-box}
+.phone-screen-stage{position:relative;width:100%;height:var(--phone-stage-h,420px);overflow:hidden}
+.phone-panel{opacity:0;transform:translateY(20px) scale(0.97);filter:blur(5px);transition:opacity 0.65s cubic-bezier(0.22,1,0.36,1),transform 0.65s cubic-bezier(0.22,1,0.36,1),filter 0.55s ease;pointer-events:none;position:absolute;inset:0;width:100%;box-sizing:border-box;overflow:hidden;z-index:0}
+.phone-panel.is-active{opacity:1;transform:translateY(0) scale(1);filter:blur(0);pointer-events:auto;z-index:2}
+.phone-panel.is-measure{position:relative !important;inset:auto !important;width:100% !important;opacity:1 !important;visibility:visible !important;transform:none !important;filter:none !important;pointer-events:none;z-index:0}
+.phone-scene-dots{display:flex;justify-content:center;gap:6px;margin-top:14px}
+.phone-scene-dot{width:6px;height:6px;border-radius:999px;background:oklch(1 0 0 / 0.18);transition:width 0.35s ease,background 0.35s ease}
+.phone-scene-dot.is-active{width:18px;background:var(--primary)}
+
+/* ----- Scene 1: dashboard ----- */
+.mock-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.mock-mark{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#000}
+.mock-brand-title{font-size:var(--fs-base);font-weight:700;color:#fff;line-height:1.2}
+.mock-brand-sub{font-size:var(--fs-xs);color:var(--ink-subtle);line-height:1.2;margin-top:2px}
+.mock-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.mock-stat{background:oklch(1 0 0 / 0.04);border-radius:10px;padding:12px 8px;text-align:center;border:1px solid var(--border)}
+.mock-stat-num{display:block;font-size:var(--fs-xl);font-weight:800;color:var(--primary);font-family:var(--font-mono)}
+.mock-stat-label{font-size:var(--fs-xs);color:var(--ink-subtle);margin-top:2px}
+.mock-card{background:oklch(1 0 0 / 0.04);border-radius:12px;padding:14px;border:1px solid var(--border);margin-bottom:10px}
+.mock-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.mock-card-title{font-size:var(--fs-sm);font-weight:700;color:#fff}
+.mock-card-tag{font-size:11px;font-weight:700;color:#000;background:var(--primary);padding:2px 8px;border-radius:999px}
+.mock-card-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 12px;margin-bottom:8px}
+.mock-card-meta-row{display:flex;justify-content:space-between;font-size:var(--fs-xs)}
+.mock-card-meta-row span:first-child{color:var(--ink-subtle)}
+.mock-card-meta-row span:last-child{color:#fff;font-weight:600;font-family:var(--font-mono)}
+.mock-card-cta{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--border)}
+.mock-card-cta-price{font-size:var(--fs-base);font-weight:800;color:var(--primary);font-family:var(--font-mono)}
+.mock-card-cta-btn{font-size:11px;font-weight:700;color:#000;background:var(--primary);padding:5px 12px;border-radius:999px}
+.mock-list{display:flex;flex-direction:column;gap:6px}
+.mock-list-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:oklch(1 0 0 / 0.04);border:1px solid var(--border);border-radius:10px;font-size:var(--fs-xs);transition:background 0.3s ease,border-color 0.3s ease}
+.mock-list-item.is-new{background:oklch(0.918 0.182 102 / 0.18);border-color:oklch(0.918 0.182 102 / 0.42);animation:mock-pulse 1.4s ease-in-out}
+.mock-list-num{font-family:var(--font-mono);font-weight:800;color:var(--primary);min-width:24px}
+.mock-list-body{flex:1;min-width:0}
+.mock-list-name{font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mock-list-meta{color:var(--ink-subtle);font-size:11px;margin-top:2px}
+.mock-list-cta{font-size:11px;font-weight:700;color:var(--primary);padding:4px 10px;border:1px solid var(--primary);border-radius:999px}
+
+/* ----- Scene 2: DingTalk push ----- */
+.mock-msg{display:flex;flex-direction:column;gap:14px}
+.mock-msg-head{display:flex;align-items:center;gap:10px}
+.mock-msg-bot-avatar{width:36px;height:36px;border-radius:8px;background:#2A88E6;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff}
+.mock-msg-bot-name{font-size:var(--fs-sm);font-weight:700;color:#fff;line-height:1.2}
+.mock-msg-bot-time{font-size:11px;color:var(--ink-subtle);margin-top:2px}
+.mock-msg-card{background:oklch(1 0 0 / 0.06);border:1px solid var(--border-strong);border-radius:12px;padding:14px;position:relative;opacity:0;transform:translateY(8px);transition:opacity 0.45s ease,transform 0.45s ease}
+.mock-msg-card.is-active{opacity:1;transform:translateY(0)}
+.mock-msg-card-pill{display:inline-block;font-size:11px;font-weight:700;color:#000;background:var(--primary);padding:3px 10px;border-radius:999px;margin-bottom:10px}
+.mock-msg-card-title{font-size:var(--fs-base);font-weight:700;color:#fff;margin-bottom:8px;line-height:1.3}
+.mock-msg-card-price{display:flex;align-items:baseline;gap:6px;margin-bottom:12px}
+.mock-msg-card-price-num{font-family:var(--font-mono);font-size:var(--fs-2xl);font-weight:800;color:var(--primary);letter-spacing:-0.02em}
+.mock-msg-card-price-meta{font-size:var(--fs-xs);color:var(--ink-subtle)}
+.mock-msg-card-fields{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;padding-top:10px;border-top:1px solid var(--border)}
+.mock-msg-card-row{display:flex;justify-content:space-between;font-size:var(--fs-xs)}
+.mock-msg-card-row-label{color:var(--ink-subtle)}
+.mock-msg-card-row-value{color:#fff;font-weight:600;font-family:var(--font-mono)}
+.mock-msg-card-button{display:block;text-align:center;padding:9px 0;background:var(--primary);color:#000;border-radius:8px;font-weight:700;font-size:var(--fs-sm);margin-top:6px;transform:scale(0.96);opacity:0;transition:transform 0.4s cubic-bezier(0.22,1,0.36,1),opacity 0.4s ease}
+.mock-msg-card.is-send-done .mock-msg-card-button{transform:scale(1);opacity:1}
+.mock-msg-card-tail{font-size:11px;color:var(--ink-subtle);text-align:right;margin-top:8px;opacity:0;transition:opacity 0.5s ease 0.2s}
+.mock-msg-card.is-send-done .mock-msg-card-tail{opacity:1}/* =============================================================
+   REVEAL ANIMATION + FEATURES (pillars)
+   ============================================================= */
+/* Reveal: visible by default; only hidden when JS has confirmed observer is wired. */
+.reveal{opacity:1;transform:none}
+html.js-ready .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.7s cubic-bezier(0.22,1,0.36,1),transform 0.7s cubic-bezier(0.22,1,0.36,1);transition-delay:var(--reveal-delay,0s)}
+html.js-ready .reveal.visible{opacity:1;transform:translateY(0)}
+/* Hero-enter: visible by default; JS-ready triggers the entrance animation. */
+html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1) both;animation-delay:calc(0.12s + var(--enter-i,0) * 0.11s)}
+
+.features{padding-top:clamp(80px,9vw,120px);padding-bottom:clamp(80px,9vw,120px)}
+.features-head{margin-bottom:clamp(40px,5vw,64px)}
+.features-list{display:flex;flex-direction:column;gap:clamp(36px,4vw,56px)}
+.feature-row{display:grid;grid-template-columns:72px 1fr;gap:24px;align-items:start}
+.feature-row-icon{width:56px;height:56px;border-radius:14px;background:var(--surface);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:800;color:var(--primary);letter-spacing:-0.02em;flex-shrink:0}
+.feature-row-text{max-width:620px}
+.feature-row-num{display:block;font-family:var(--font-mono);font-size:var(--fs-xs);font-weight:700;color:var(--ink-subtle);letter-spacing:0.08em;margin-bottom:8px}
+.feature-row-title{font-size:var(--fs-xl);font-weight:700;color:#fff;line-height:var(--leading-snug);margin-bottom:10px;letter-spacing:-0.01em}
+.feature-row-desc{font-size:var(--fs-base);color:var(--ink-muted);line-height:var(--leading-relaxed)}
+
+/* =============================================================
+   MOBILE OPS
+   ============================================================= */
+.mobile-ops{background:var(--surface);padding-top:clamp(80px,9vw,120px);padding-bottom:clamp(80px,9vw,120px);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.mobile-ops-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.mobile-ops-list{display:flex;flex-direction:column;gap:0}
+.mobile-ops-item{padding:24px 0;border-bottom:1px solid var(--border);cursor:default;transition:padding-left 0.35s cubic-bezier(0.22,1,0.36,1)}
+.mobile-ops-item:first-child{padding-top:0}
+.mobile-ops-item:last-child{border-bottom:none}
+.mobile-ops-item.is-active{padding-left:16px}
+.mobile-ops-item.is-active .mobile-ops-title{color:var(--primary)}
+.mobile-ops-item.is-active .mobile-ops-arrow{opacity:1;transform:translateX(0);color:var(--primary)}
+.mobile-ops-title{font-size:var(--fs-xl);font-weight:700;color:#fff;line-height:var(--leading-snug);letter-spacing:-0.01em;margin-bottom:6px;transition:color 0.3s ease}
+.mobile-ops-desc{font-size:var(--fs-base);color:var(--ink-muted);line-height:var(--leading-relaxed)}
+.mobile-ops-arrow{display:inline-block;margin-top:8px;font-size:var(--fs-sm);color:var(--primary);opacity:0;transform:translateX(-8px);transition:opacity 0.3s ease,transform 0.3s ease,color 0.3s ease}
+
+.push-card{background:var(--surface-elevated);border:1px solid var(--border-strong);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-md);position:sticky;top:calc(var(--header-h) + 24px)}
+.push-card-title{font-size:var(--fs-xs);font-weight:700;color:var(--ink-subtle);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.push-card-title::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--primary);box-shadow:0 0 8px var(--primary-glow);animation:badge-pulse 2.4s ease-in-out infinite}
+.push-card-rows{display:flex;flex-direction:column;gap:8px}
+.push-card-row{display:flex;align-items:center;gap:12px;padding:14px;background:oklch(0.122 0.014 264 / 0.6);border:1px solid var(--border);border-radius:12px;transition:background 0.3s ease,border-color 0.3s ease,transform 0.3s ease}
+.push-card-row.is-highlight{background:oklch(0.918 0.182 102 / 0.12);border-color:oklch(0.918 0.182 102 / 0.35);transform:translateX(2px)}
+.push-card-row-num{font-family:var(--font-mono);font-weight:800;color:var(--primary);min-width:24px}
+.push-card-row-body{flex:1;min-width:0}
+.push-card-row-title{font-size:var(--fs-sm);font-weight:700;color:#fff;margin-bottom:2px}
+.push-card-row-meta{font-size:var(--fs-xs);color:var(--ink-subtle)}
+.push-card-row-btn{font-size:11px;font-weight:700;color:#000;background:var(--primary);padding:6px 12px;border-radius:999px;flex-shrink:0;transition:background 0.3s ease}
+.push-card-row.is-highlight .push-card-row-btn{background:#fff}
+
+/* =============================================================
+   STEPS
+   ============================================================= */
+.steps{padding-top:clamp(80px,9vw,120px);padding-bottom:clamp(80px,9vw,120px)}
+.steps-head{margin-bottom:clamp(40px,5vw,64px)}
+.steps-list{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;counter-reset:step}
+.step-item{counter-increment:step;display:grid;grid-template-columns:64px 1fr;gap:20px;align-items:start;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);transition:border-color 0.3s ease,transform 0.3s ease}
+.step-item:hover{border-color:var(--border-strong);transform:translateY(-2px)}
+.step-num{font-family:var(--font-mono);font-size:var(--fs-2xl);font-weight:800;color:var(--primary);letter-spacing:-0.02em;line-height:1}
+.step-num::before{content:counter(step,decimal-leading-zero)}
+.step-title{font-size:var(--fs-xl);font-weight:700;color:#fff;line-height:var(--leading-snug);margin-bottom:8px;letter-spacing:-0.01em}
+.step-desc{font-size:var(--fs-base);color:var(--ink-muted);line-height:var(--leading-relaxed)}/* =============================================================
+   PRICING
+   ============================================================= */
+.pricing{background:var(--surface);padding-top:clamp(80px,9vw,120px);padding-bottom:clamp(80px,9vw,120px);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.pricing-head{margin-bottom:clamp(48px,6vw,72px)}
+.pricing-editions{display:flex;flex-direction:column;gap:32px}
+.pricing-edition{background:var(--surface-elevated);border:1px solid var(--border-strong);border-radius:var(--radius-lg);padding:clamp(28px,4vw,40px);box-shadow:var(--shadow-sm)}
+.pricing-edition--desktop{background:transparent;border-color:var(--border);box-shadow:none}
+.pricing-edition-head{display:flex;flex-direction:column;gap:6px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.pricing-edition-tag{display:inline-block;align-self:flex-start;font-size:var(--fs-xs);font-weight:700;color:#000;background:var(--primary);padding:3px 10px;border-radius:999px;letter-spacing:0.05em;margin-bottom:4px}
+.pricing-edition-title{font-size:var(--fs-xl);font-weight:700;color:#fff;line-height:var(--leading-snug);letter-spacing:-0.01em}
+.pricing-edition-desc{font-size:var(--fs-sm);color:var(--ink-muted);line-height:var(--leading-relaxed);margin-top:6px}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.pricing-card{position:relative;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:8px;transition:border-color 0.3s ease,transform 0.3s ease,box-shadow 0.3s ease}
+.pricing-card:hover{border-color:var(--border-strong);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.pricing-card--featured{border-color:oklch(0.918 0.182 102 / 0.45);background:linear-gradient(180deg,oklch(0.918 0.182 102 / 0.06) 0%,transparent 60%)}
+.pricing-card--featured:hover{border-color:var(--primary);box-shadow:0 12px 40px var(--primary-glow)}
+.pricing-badge{position:absolute;top:-12px;left:24px;font-size:11px;font-weight:800;color:#000;background:var(--primary);padding:4px 12px;border-radius:999px;letter-spacing:0.04em;box-shadow:0 2px 12px var(--primary-glow)}
+.pricing-name{font-size:var(--fs-base);font-weight:700;color:var(--ink-subtle);letter-spacing:0.04em}
+.pricing-price{font-family:var(--font-mono);font-size:var(--fs-h3);font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1}
+.pricing-price small{font-size:var(--fs-base);font-weight:600;color:var(--ink-muted);margin-left:4px}
+.pricing-card--featured .pricing-price{color:var(--primary)}
+.pricing-daily{font-family:var(--font-mono);font-size:var(--fs-sm);color:var(--ink-muted);font-weight:600}
+.pricing-card--featured .pricing-daily{color:var(--primary-dark)}
+.pricing-note{font-size:var(--fs-xs);color:var(--ink-subtle);line-height:var(--leading-snug);margin-top:auto;padding-top:8px;border-top:1px solid var(--border)}
+.pricing-caveat{margin-top:20px;font-size:var(--fs-sm);color:var(--ink-muted);line-height:var(--leading-relaxed)}
+.pricing-caveat strong{color:var(--primary);font-weight:700}
+.pricing-foot{font-size:var(--fs-base);color:var(--ink-muted);text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid var(--border)}
+.pricing-foot a{color:var(--primary);font-weight:700;border-bottom:1px solid oklch(0.918 0.182 102 / 0.4);transition:border-color 0.2s ease}
+.pricing-foot a:hover{border-color:var(--primary)}
+
+/* =============================================================
+   CONTACT
+   ============================================================= */
+.contact{padding-top:clamp(80px,9vw,120px);padding-bottom:clamp(80px,9vw,120px)}
+.contact-inner{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:560px;margin:0 auto}
+.contact .section-label{margin-inline:auto}
+.contact .section-title{font-size:var(--fs-h2);text-wrap:balance}
+.contact-desc{text-align:center;margin:0 auto 32px}
+.contact-qr{width:168px;height:168px;border-radius:var(--radius);background:#fff;padding:12px;box-shadow:0 12px 32px rgba(0,0,0,.4),0 0 0 1px var(--border-strong);margin-bottom:24px;display:flex;align-items:center;justify-content:center}
+.contact-qr svg{width:100%;height:100%;display:block}
+.contact-wechat{display:flex;align-items:center;gap:8px;font-size:var(--fs-base);color:var(--ink-muted);margin-bottom:8px}
+.contact-wechat span:last-child{font-family:var(--font-mono);color:#fff;font-weight:700;letter-spacing:0.02em}
+.contact-hint{font-size:var(--fs-sm);color:var(--ink-subtle);margin-top:6px}
+
+/* =============================================================
+   FOOTER
+   ============================================================= */
+.footer{padding:32px clamp(28px,5vw,56px);border-top:1px solid var(--border);font-size:var(--fs-xs);color:var(--ink-subtle);text-align:center;letter-spacing:0.04em;line-height:var(--leading-relaxed)}
+.footer-sep{margin:0 10px;color:var(--border-strong)}/* =============================================================
+   KEYFRAMES
+   ============================================================= */
+@keyframes hero-enter{from{transform:translateY(28px)}to{transform:translateY(0)}}
+@keyframes title-underline{to{transform:scaleX(1)}}
+@keyframes orb-drift-1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-30px,40px) scale(1.05)}}
+@keyframes orb-drift-2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.08)}}
+@keyframes badge-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.18)}}
+@keyframes phone-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes mock-pulse{0%{background:oklch(0.918 0.182 102 / 0.05);border-color:var(--border)}30%{background:oklch(0.918 0.182 102 / 0.25);border-color:oklch(0.918 0.182 102 / 0.55)}100%{background:oklch(0.918 0.182 102 / 0.18);border-color:oklch(0.918 0.182 102 / 0.42)}}
+
+/* =============================================================
+   RESPONSIVE
+   ============================================================= */
+@media (max-width:960px){
+  .hero-grid{grid-template-columns:1fr;gap:48px}
+  .hero-wrap{justify-content:center}
+  .hero-slogan{max-width:none}
+  .hero-metrics{margin-top:48px}
+  .features-head,.steps-head,.pricing-head,.mobile-ops-head{margin-bottom:40px}
+  .mobile-ops-grid{grid-template-columns:1fr;gap:40px}
+  .push-card{position:static}
+  .steps-list{grid-template-columns:1fr;gap:20px}
+  .nav{gap:18px}
+}
+@media (max-width:800px){
+  .hero-title{font-size:clamp(2.25rem,7vw,3rem)}
+  .section-title{font-size:clamp(1.625rem,4.5vw,2.25rem)}
+  .pricing-edition{padding:24px}
+  .pricing-grid{grid-template-columns:repeat(2,1fr)}
+  .feature-row{grid-template-columns:56px 1fr;gap:18px}
+  .feature-row-icon{width:48px;height:48px;font-size:var(--fs-xs)}
+}
+@media (max-width:640px){
+  .nav a:not(.nav-cta){display:none}
+  .nav{gap:0}
+  .hero{padding-top:calc(var(--header-h) + 48px)}
+  .hero-metrics{grid-template-columns:repeat(2,1fr)}
+  .hero-metrics-item{padding:20px 16px}
+  .pricing-grid{grid-template-columns:1fr}
+  .step-item{grid-template-columns:48px 1fr;gap:16px;padding:20px}
+  .step-num{font-size:var(--fs-xl)}
+  .feature-row{padding:0}
+  .mobile-ops-item{padding:18px 0}
+  .contact-qr{width:144px;height:144px}
+  .footer{font-size:11px}
+}
+
+/* =============================================================
+   REDUCED MOTION
+   ============================================================= */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important}
+  .reveal,html.js-ready .reveal{opacity:1;transform:none;transition:none}
+  .hero-enter,html.js-ready .hero-enter{opacity:1;transform:none;animation:none}
+  .hero-orb,.phone-scene{animation:none}
+  .phone{transform:none !important}
+  .phone-shine,.phone-glow{transition:none}
+  .mock-list-item.is-new{animation:none}
+}/* ----- addendum: modifier classes ----- */
+.magnetic{will-change:transform}
+.phone-panel--dashboard{background:#12151C}
+.phone-panel--dingtalk{background:#12151C}
+.pricing-edition--cloud{box-shadow:var(--shadow-md)}
+</style>
+</head>
+<body>  <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress-bar" id="scrollProgressBar"></div></div>
+
+  <!-- ===== Header ===== -->
+  <header class="header header--hero" id="header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="上新监控 · 首页">
+        <span class="brand-mark" aria-hidden="true">上</span>
+        <span class="brand-name">上新监控</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="#features">核心能力</a>
+        <a href="#ops">手机端操作</a>
+        <a href="#steps">使用流程</a>
+        <a href="#pricing">套餐价格</a>
+        <a class="nav-cta magnetic" href="#contact">获取激活码</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Hero band ===== -->
+  <div class="hero-band" id="top">
+    <div class="hero-band-bg" id="heroBandBg" aria-hidden="true"></div>
+    <div class="hero-band-grid" id="heroBandGrid" aria-hidden="true"></div>
+    <div class="hero-band-orbs" aria-hidden="true">
+      <div class="hero-orb hero-orb--1"></div>
+      <div class="hero-orb hero-orb--2"></div>
+    </div>
+
+    <section class="section hero">
+      <div class="hero-grid">
+        <!-- Hero copy -->
+        <div class="hero-copy">
+          <span class="hero-badge hero-enter" style="--enter-i:0">
+            <span class="hero-badge-dot" aria-hidden="true"></span>
+            实时监控 · 已上线 v2.0.8
+          </span>
+          <h1 class="hero-title hero-enter" style="--enter-i:1">
+            闲鱼 / 转转 / Goofish<br/>
+            <em>3 秒</em>级实时上新监控
+          </h1>
+          <p class="hero-slogan hero-enter" style="--enter-i:2">
+            钉钉秒级推送 · 手机端任务启停 · 分段价格筛选 · 一键锁单不漏单。把守全天，把窗口抢在别人前面。
+          </p>
+          <div class="hero-actions hero-enter" style="--enter-i:3">
+            <a class="btn-primary magnetic" href="#contact">获取激活码</a>
+            <a class="btn-ghost magnetic" href="#pricing">查看电脑版</a>
+          </div>
+
+          <div class="hero-metrics hero-enter" style="--enter-i:4" aria-label="核心指标">
+            <div class="hero-metrics-item">
+              <strong>3s</strong>
+              <span>轮询间隔</span>
+            </div>
+            <div class="hero-metrics-item">
+              <strong>3+</strong>
+              <span>平台覆盖</span>
+            </div>
+            <div class="hero-metrics-item">
+              <strong>≤1s</strong>
+              <span>钉钉触达</span>
+            </div>
+            <div class="hero-metrics-item">
+              <strong>24/7</strong>
+              <span>全天待命</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phone mockup -->
+        <div class="phone-wrap is-idle-tilt" id="phoneTilt">
+          <div class="phone-scene" id="phoneScene">
+            <div class="phone-glow" aria-hidden="true"></div>
+            <div class="phone" id="phone3d">
+              <div class="phone-shine" id="phoneShine" aria-hidden="true"></div>
+              <div class="phone-notch"><div class="phone-notch-bar"></div></div>
+              <div class="phone-screen">
+                <div class="phone-screen-stage" id="phoneScreenStage">
+
+                  <!-- Scene 1: dashboard -->
+                  <div class="phone-panel phone-panel--dashboard" data-scene="dashboard">
+                    <div class="mock-header">
+                      <div class="mock-mark" aria-hidden="true">上</div>
+                      <div>
+                        <div class="mock-brand-title">上新监控</div>
+                        <div class="mock-brand-sub">实时监控 · 12 个任务运行中</div>
+                      </div>
+                    </div>
+                    <div class="mock-stats">
+                      <div class="mock-stat"><span class="mock-stat-num">12</span><span class="mock-stat-label">监控中</span></div>
+                      <div class="mock-stat"><span class="mock-stat-num">3</span><span class="mock-stat-label">今日命中</span></div>
+                      <div class="mock-stat"><span class="mock-stat-num">86%</span><span class="mock-stat-label">命中准确</span></div>
+                    </div>
+                    <div class="mock-card">
+                      <div class="mock-card-head">
+                        <div class="mock-card-title">闲鱼 · iPhone 15 Pro 256G</div>
+                        <span class="mock-card-tag">新命中</span>
+                      </div>
+                      <div class="mock-card-meta">
+                        <div class="mock-card-meta-row"><span>发布时间</span><span>刚刚</span></div>
+                        <div class="mock-card-meta-row"><span>卖家信用</span><span>极好</span></div>
+                        <div class="mock-card-meta-row"><span>地区</span><span>上海</span></div>
+                        <div class="mock-card-meta-row"><span>关键词</span><span>iPhone / 15</span></div>
+                      </div>
+                      <div class="mock-card-cta">
+                        <span class="mock-card-cta-price">¥4280</span>
+                        <span class="mock-card-cta-btn">立即查看</span>
+                      </div>
+                    </div>
+                    <div class="mock-list" id="mockPush">
+                      <div class="mock-list-item is-new">
+                        <span class="mock-list-num">01</span>
+                        <div class="mock-list-body">
+                          <div class="mock-list-name">AirPods Pro 2 · 国行</div>
+                          <div class="mock-list-meta">¥899 · 杭州 · 2 分钟前</div>
+                        </div>
+                        <span class="mock-list-cta">拍</span>
+                      </div>
+                      <div class="mock-list-item is-new">
+                        <span class="mock-list-num">02</span>
+                        <div class="mock-list-body">
+                          <div class="mock-list-name">Switch OLED 白色 · 箱说全</div>
+                          <div class="mock-list-meta">¥1680 · 北京 · 5 分钟前</div>
+                        </div>
+                        <span class="mock-list-cta">拍</span>
+                      </div>
+                      <div class="mock-list-item is-new">
+                        <span class="mock-list-num">03</span>
+                        <div class="mock-list-body">
+                          <div class="mock-list-name">iPad Air 5 · 64G WiFi</div>
+                          <div class="mock-list-meta">¥2580 · 深圳 · 11 分钟前</div>
+                        </div>
+                        <span class="mock-list-cta">拍</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Scene 2: DingTalk push -->
+                  <div class="phone-panel phone-panel--dingtalk" data-scene="dingtalk">
+                    <div class="mock-msg">
+                      <div class="mock-msg-head">
+                        <div class="mock-msg-bot-avatar" aria-hidden="true">钉</div>
+                        <div>
+                          <div class="mock-msg-bot-name">上新监控机器人</div>
+                          <div class="mock-msg-bot-time">刚刚</div>
+                        </div>
+                      </div>
+                      <div class="mock-msg-card">
+                        <span class="mock-msg-card-pill">价格命中</span>
+                        <div class="mock-msg-card-title">闲鱼 · iPhone 15 Pro 256G</div>
+                        <div class="mock-msg-card-price">
+                          <span class="mock-msg-card-price-num">¥4280</span>
+                          <span class="mock-msg-card-price-meta">低于监控价 ¥4500</span>
+                        </div>
+                        <div class="mock-msg-card-fields">
+                          <div class="mock-msg-card-row"><span class="mock-msg-card-row-label">发布时间</span><span class="mock-msg-card-row-value">3 秒前</span></div>
+                          <div class="mock-msg-card-row"><span class="mock-msg-card-row-label">卖家信用</span><span class="mock-msg-card-row-value">极好</span></div>
+                          <div class="mock-msg-card-row"><span class="mock-msg-card-row-label">地区</span><span class="mock-msg-card-row-value">上海</span></div>
+                          <div class="mock-msg-card-row"><span class="mock-msg-card-row-label">距离窗口</span><span class="mock-msg-card-row-value">~5 分钟</span></div>
+                        </div>
+                        <a class="mock-msg-card-button" href="#" onclick="return false">立即查看</a>
+                        <div class="mock-msg-card-tail">已发送 · 点击查看完整商品</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="phone-scene-dots" aria-hidden="true">
+                  <span class="phone-scene-dot is-active" data-scene="dashboard"></span>
+                  <span class="phone-scene-dot" data-scene="dingtalk"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="hero-band-foot" aria-hidden="true"></div>
+  </div>
+  <!-- ===== Features / Pillars ===== -->
+  <section class="features section section-shell" id="features">
+    <header class="features-head reveal">
+      <div class="section-label">核心能力</div>
+      <h2 class="section-title">把守每一秒,把窗口抢在别人前面</h2>
+      <p class="section-desc">从秒级轮询到分段筛选,再到钉钉推送与一键锁单 — 五件事一起做对,才算把"先机"握在手里。</p>
+    </header>
+    <ol class="features-list" role="list">
+      <li class="feature-row reveal">
+        <div class="feature-row-icon" aria-hidden="true">3s</div>
+        <div class="feature-row-text">
+          <span class="feature-row-num">CAPABILITY / 01</span>
+          <h3 class="feature-row-title">3 秒级实时轮询</h3>
+          <p class="feature-row-desc">多平台账号并行轮询,3 秒间隔扫描新发布;命中即推,不浪费一秒的窗口期。</p>
+        </div>
+      </li>
+      <li class="feature-row reveal">
+        <div class="feature-row-icon" aria-hidden="true">YEN</div>
+        <div class="feature-row-text">
+          <span class="feature-row-num">CAPABILITY / 02</span>
+          <h3 class="feature-row-title">分段价格精准筛选</h3>
+          <p class="feature-row-desc">按品类设置多档价格区间,只推送真正值得出手的标的;过滤掉垃圾信息,命中率更高。</p>
+        </div>
+      </li>
+      <li class="feature-row reveal">
+        <div class="feature-row-icon" aria-hidden="true">PUSH</div>
+        <div class="feature-row-text">
+          <span class="feature-row-num">CAPABILITY / 03</span>
+          <h3 class="feature-row-title">钉钉 / 微信秒级推送</h3>
+          <p class="feature-row-desc">命中后 1 秒内推送到钉钉群机器人或微信;商品卡片直链,点开就能拍,不用再翻聊天记录。</p>
+        </div>
+      </li>
+      <li class="feature-row reveal">
+        <div class="feature-row-icon" aria-hidden="true">MOB</div>
+        <div class="feature-row-text">
+          <span class="feature-row-num">CAPABILITY / 04</span>
+          <h3 class="feature-row-title">手机端任务随时启停</h3>
+          <p class="feature-row-desc">通勤路上、外出吃饭,都能直接操控监控任务;启停 / 暂停 / 调整,几秒搞定,不必非要坐到电脑前。</p>
+        </div>
+      </li>
+      <li class="feature-row reveal">
+        <div class="feature-row-icon" aria-hidden="true">LOCK</div>
+        <div class="feature-row-text">
+          <span class="feature-row-num">CAPABILITY / 05</span>
+          <h3 class="feature-row-title">一键锁单 · 不再错过</h3>
+          <p class="feature-row-desc">命中即触发自动锁单流程;不需要手速,系统帮你把那 5 分钟的窗口期,变成已经到手的订单。</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+  <!-- ===== Mobile ops ===== -->
+  <section class="mobile-ops" id="ops">
+    <div class="section">
+      <header class="mobile-ops-head reveal">
+        <div class="section-label">手机端操作</div>
+        <h2 class="section-title">手机上,才是真正的操作中心</h2>
+        <p class="section-desc">电脑端负责"全天守候",手机端负责"临门一脚" — 触发即响应,响应即可执行。</p>
+      </header>
+      <div class="mobile-ops-grid">
+        <ul class="mobile-ops-list" id="mobileOpsList">
+          <li class="mobile-ops-item reveal" data-target="task-start">
+            <div class="mobile-ops-title">任务启停</div>
+            <p class="mobile-ops-desc">一键启动 / 暂停全部监控任务,通勤路上也能切换状态。</p>
+            <span class="mobile-ops-arrow">→</span>
+          </li>
+          <li class="mobile-ops-item reveal" data-target="task-pause">
+            <div class="mobile-ops-title">实时筛选</div>
+            <p class="mobile-ops-desc">临时调价、改关键词、暂停某个账号 — 在手机上几秒搞定。</p>
+            <span class="mobile-ops-arrow">→</span>
+          </li>
+          <li class="mobile-ops-item reveal" data-target="task-pause-all">
+            <div class="mobile-ops-title">一键锁单</div>
+            <p class="mobile-ops-desc">命中推送直接点开,几秒内完成下单;不必再回到电脑端。</p>
+            <span class="mobile-ops-arrow">→</span>
+          </li>
+        </ul>        <aside class="push-card reveal" id="pushCardMock">
+          <div class="push-card-title">实时推送预览</div>
+          <div class="push-card-rows">
+            <div class="push-card-row" data-action="task-start">
+              <span class="push-card-row-num">01</span>
+              <div class="push-card-row-body">
+                <div class="push-card-row-title">启动全部任务</div>
+                <div class="push-card-row-meta">12 个任务已加入监控</div>
+              </div>
+              <span class="push-card-row-btn">启动</span>
+            </div>
+            <div class="push-card-row" data-action="task-pause">
+              <span class="push-card-row-num">02</span>
+              <div class="push-card-row-body">
+                <div class="push-card-row-title">暂停命中任务</div>
+                <div class="push-card-row-meta">命中后自动暂停,避免重复推送</div>
+              </div>
+              <span class="push-card-row-btn">已暂停</span>
+            </div>
+            <div class="push-card-row" data-action="task-pause-all">
+              <span class="push-card-row-num">03</span>
+              <div class="push-card-row-body">
+                <div class="push-card-row-title">一键锁单</div>
+                <div class="push-card-row-meta">命中即触发,5 秒内完成下单</div>
+              </div>
+              <span class="push-card-row-btn">去锁单</span>
+            </div>
+            <div class="push-card-row" data-action="history">
+              <span class="push-card-row-num">04</span>
+              <div class="push-card-row-body">
+                <div class="push-card-row-title">命中历史</div>
+                <div class="push-card-row-meta">最近 30 条 · 支持筛选回放</div>
+              </div>
+              <span class="push-card-row-btn">查看</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+  <!-- ===== Steps ===== -->
+  <section class="steps section section-shell" id="steps">
+    <header class="steps-head reveal">
+      <div class="section-label">使用流程</div>
+      <h2 class="section-title">四步上手,从零到第一个命中推送</h2>
+      <p class="section-desc">不需要技术背景,激活后跟着步骤走,十分钟内就能跑起来。</p>
+    </header>
+    <ol class="steps-list" role="list">
+      <li class="step-item reveal">
+        <div class="step-num" aria-hidden="true"></div>
+        <div>
+          <h3 class="step-title">添加平台账号</h3>
+          <p class="step-desc">扫码登录闲鱼 / 转转 / Goofish 账号,支持多账号并行监控。</p>
+        </div>
+      </li>
+      <li class="step-item reveal">
+        <div class="step-num" aria-hidden="true"></div>
+        <div>
+          <h3 class="step-title">设置价格区间与关键词</h3>
+          <p class="step-desc">按品类分档设价,加上想要的关键词组合;只推送真正想看的命中。</p>
+        </div>
+      </li>
+      <li class="step-item reveal">
+        <div class="step-num" aria-hidden="true"></div>
+        <div>
+          <h3 class="step-title">启动实时监控</h3>
+          <p class="step-desc">任务从后台启动,3 秒间隔扫描新发布;命中即触发钉钉推送。</p>
+        </div>
+      </li>
+      <li class="step-item reveal">
+        <div class="step-num" aria-hidden="true"></div>
+        <div>
+          <h3 class="step-title">钉钉秒推 · 手机端响应</h3>
+          <p class="step-desc">钉钉卡片直接点开,手机上完成锁单 / 暂停 / 启停;窗口期内搞定。</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+  <!-- ===== Pricing ===== -->
+  <section class="pricing" id="pricing">
+    <div class="section">
+      <header class="pricing-head reveal">
+        <div class="section-label">套餐价格</div>
+        <h2 class="section-title">按使用强度选,不必一次性包年</h2>
+        <p class="section-desc">手机端为云端版,无需挂机即可使用;电脑端需保持客户端运行以获得完整功能。</p>
+      </header>
+      <div class="pricing-editions">
+        <div class="pricing-edition pricing-edition--cloud reveal">
+          <div class="pricing-edition-head">
+            <span class="pricing-edition-tag">云端版</span>
+            <h3 class="pricing-edition-title">手机端云端监控 · 即开即用</h3>
+            <p class="pricing-edition-desc">免挂机,7×24 小时云端运行;手机端随时启停,推送秒级触达。</p>
+          </div>          <div class="pricing-grid">
+            <div class="pricing-card reveal">
+              <div class="pricing-name">日卡</div>
+              <div class="pricing-price">28<small>元</small></div>
+              <div class="pricing-daily">按天体验</div>
+              <p class="pricing-note">功能完整 · 低价入门</p>
+            </div>
+            <div class="pricing-card reveal">
+              <div class="pricing-name">月卡</div>
+              <div class="pricing-price">158<small>元</small></div>
+              <div class="pricing-daily">约 ¥5.3 / 天</div>
+              <p class="pricing-note">日常监控 · 灵活续费</p>
+            </div>
+            <div class="pricing-card reveal">
+              <div class="pricing-name">季卡</div>
+              <div class="pricing-price">418<small>元</small></div>
+              <div class="pricing-daily">约 ¥4.6 / 天</div>
+              <p class="pricing-note">稳定使用 · 更省一点</p>
+            </div>
+            <div class="pricing-card pricing-card--featured reveal">
+              <span class="pricing-badge">最省</span>
+              <div class="pricing-name">年卡</div>
+              <div class="pricing-price">1198<small>元</small></div>
+              <div class="pricing-daily">约 ¥3.3 / 天</div>
+              <p class="pricing-note">长期盯货 · 单价最低</p>
+            </div>
+          </div>
+        </div>        <div class="pricing-edition pricing-edition--desktop reveal">
+          <div class="pricing-edition-head">
+            <span class="pricing-edition-tag">电脑版</span>
+            <h3 class="pricing-edition-title">全功能 + 自动发消息 · 需挂机</h3>
+            <p class="pricing-edition-desc">含手机端全部能力,并支持自动发消息;套餐价格低于云端版,客户端需一直保持运行。</p>
+          </div>
+          <div class="pricing-grid">
+            <div class="pricing-card reveal">
+              <div class="pricing-name">日卡</div>
+              <div class="pricing-price">18<small>元</small></div>
+              <div class="pricing-daily">按天体验</div>
+              <p class="pricing-note">功能完整 · 低价入门</p>
+            </div>
+            <div class="pricing-card reveal">
+              <div class="pricing-name">月卡</div>
+              <div class="pricing-price">128<small>元</small></div>
+              <div class="pricing-daily">约 ¥4.3 / 天</div>
+              <p class="pricing-note">比云端版省 ¥30</p>
+            </div>
+            <div class="pricing-card reveal">
+              <div class="pricing-name">季卡</div>
+              <div class="pricing-price">328<small>元</small></div>
+              <div class="pricing-daily">约 ¥3.6 / 天</div>
+              <p class="pricing-note">比云端版省 ¥90</p>
+            </div>
+            <div class="pricing-card pricing-card--featured reveal">
+              <span class="pricing-badge">最省</span>
+              <div class="pricing-name">年卡</div>
+              <div class="pricing-price">988<small>元</small></div>
+              <div class="pricing-daily">约 ¥2.7 / 天</div>
+              <p class="pricing-note">比云端版省 ¥210</p>
+            </div>
+          </div>
+          <p class="pricing-caveat"><strong>缺点:</strong>需保持电脑客户端运行(挂机);关机或退出程序后任务停止,不能运行;系统休眠仍可继续运行。</p>
+        </div>
+      </div>
+      <p class="pricing-foot reveal">选定版本与套餐后 <a href="#contact">联系开通</a>,微信获取激活码与使用说明</p>
+    </div>
+  </section>
+  <!-- ===== Contact ===== -->
+  <section class="contact section section-shell" id="contact">
+    <div class="contact-inner reveal">
+      <div class="section-label">联系我们</div>
+      <h2 class="section-title">获取激活码</h2>
+      <p class="section-desc contact-desc">扫码或添加微信,告知所需版本(手机端 / 电脑版)与套餐,获取激活码与使用说明</p>
+      <div class="contact-qr" aria-label="微信二维码">
+        <!-- decorative QR placeholder; deterministic pattern -->
+        <svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true">
+          <rect width="25" height="25" fill="#fff"/>          <g fill="#000">
+          <rect x="0" y="0" width="1" height="1"/>
+          <rect x="0" y="1" width="1" height="1"/>
+          <rect x="0" y="2" width="1" height="1"/>
+          <rect x="0" y="3" width="1" height="1"/>
+          <rect x="0" y="4" width="1" height="1"/>
+          <rect x="0" y="5" width="1" height="1"/>
+          <rect x="0" y="6" width="1" height="1"/>
+          <rect x="1" y="0" width="1" height="1"/>
+          <rect x="1" y="1" width="1" height="1"/>
+          <rect x="1" y="2" width="1" height="1"/>
+          <rect x="1" y="3" width="1" height="1"/>
+          <rect x="1" y="4" width="1" height="1"/>
+          <rect x="1" y="5" width="1" height="1"/>
+          <rect x="1" y="6" width="1" height="1"/>
+          <rect x="2" y="0" width="1" height="1"/>
+          <rect x="2" y="1" width="1" height="1"/>
+          <rect x="2" y="2" width="1" height="1"/>
+          <rect x="2" y="3" width="1" height="1"/>
+          <rect x="2" y="4" width="1" height="1"/>
+          <rect x="2" y="5" width="1" height="1"/>
+          <rect x="2" y="6" width="1" height="1"/>
+          <rect x="3" y="0" width="1" height="1"/>
+          <rect x="3" y="1" width="1" height="1"/>
+          <rect x="3" y="2" width="1" height="1"/>
+          <rect x="3" y="3" width="1" height="1"/>
+          <rect x="3" y="4" width="1" height="1"/>
+          <rect x="3" y="5" width="1" height="1"/>
+          <rect x="3" y="6" width="1" height="1"/>
+          <rect x="4" y="0" width="1" height="1"/>
+          <rect x="4" y="1" width="1" height="1"/>
+          <rect x="4" y="2" width="1" height="1"/>
+          <rect x="4" y="3" width="1" height="1"/>
+          <rect x="4" y="4" width="1" height="1"/>
+          <rect x="4" y="5" width="1" height="1"/>
+          <rect x="4" y="6" width="1" height="1"/>
+          <rect x="5" y="0" width="1" height="1"/>
+          <rect x="5" y="1" width="1" height="1"/>
+          <rect x="5" y="2" width="1" height="1"/>
+          <rect x="5" y="3" width="1" height="1"/>
+          <rect x="5" y="4" width="1" height="1"/>
+          <rect x="5" y="5" width="1" height="1"/>
+          <rect x="5" y="6" width="1" height="1"/>
+          <rect x="6" y="0" width="1" height="1"/>
+          <rect x="6" y="1" width="1" height="1"/>
+          <rect x="6" y="2" width="1" height="1"/>
+          <rect x="6" y="3" width="1" height="1"/>
+          <rect x="6" y="4" width="1" height="1"/>
+          <rect x="6" y="5" width="1" height="1"/>
+          <rect x="6" y="6" width="1" height="1"/>
+          <rect x="18" y="0" width="1" height="1"/>
+          <rect x="18" y="1" width="1" height="1"/>
+          <rect x="18" y="2" width="1" height="1"/>
+          <rect x="18" y="3" width="1" height="1"/>
+          <rect x="18" y="4" width="1" height="1"/>
+          <rect x="18" y="5" width="1" height="1"/>
+          <rect x="18" y="6" width="1" height="1"/>
+          <rect x="19" y="0" width="1" height="1"/>
+          <rect x="19" y="1" width="1" height="1"/>
+          <rect x="19" y="2" width="1" height="1"/>
+          <rect x="19" y="3" width="1" height="1"/>
+          <rect x="19" y="4" width="1" height="1"/>
+          <rect x="19" y="5" width="1" height="1"/>
+          <rect x="19" y="6" width="1" height="1"/>
+          <rect x="20" y="0" width="1" height="1"/>
+          <rect x="20" y="1" width="1" height="1"/>
+          <rect x="20" y="2" width="1" height="1"/>
+          <rect x="20" y="3" width="1" height="1"/>
+          <rect x="20" y="4" width="1" height="1"/>
+          <rect x="20" y="5" width="1" height="1"/>
+          <rect x="20" y="6" width="1" height="1"/>
+          <rect x="21" y="0" width="1" height="1"/>
+          <rect x="21" y="1" width="1" height="1"/>
+          <rect x="21" y="2" width="1" height="1"/>
+          <rect x="21" y="3" width="1" height="1"/>
+          <rect x="21" y="4" width="1" height="1"/>
+          <rect x="21" y="5" width="1" height="1"/>
+          <rect x="21" y="6" width="1" height="1"/>
+          <rect x="22" y="0" width="1" height="1"/>
+          <rect x="22" y="1" width="1" height="1"/>
+          <rect x="22" y="2" width="1" height="1"/>
+          <rect x="22" y="3" width="1" height="1"/>
+          <rect x="22" y="4" width="1" height="1"/>
+          <rect x="22" y="5" width="1" height="1"/>
+          <rect x="22" y="6" width="1" height="1"/>
+          <rect x="23" y="0" width="1" height="1"/>
+          <rect x="23" y="1" width="1" height="1"/>
+          <rect x="23" y="2" width="1" height="1"/>
+          <rect x="23" y="3" width="1" height="1"/>
+          <rect x="23" y="4" width="1" height="1"/>
+          <rect x="23" y="5" width="1" height="1"/>
+          <rect x="23" y="6" width="1" height="1"/>
+          <rect x="24" y="0" width="1" height="1"/>
+          <rect x="24" y="1" width="1" height="1"/>
+          <rect x="24" y="2" width="1" height="1"/>
+          <rect x="24" y="3" width="1" height="1"/>
+          <rect x="24" y="4" width="1" height="1"/>
+          <rect x="24" y="5" width="1" height="1"/>
+          <rect x="24" y="6" width="1" height="1"/>
+          <rect x="0" y="18" width="1" height="1"/>
+          <rect x="0" y="19" width="1" height="1"/>
+          <rect x="0" y="20" width="1" height="1"/>
+          <rect x="0" y="21" width="1" height="1"/>
+          <rect x="0" y="22" width="1" height="1"/>
+          <rect x="0" y="23" width="1" height="1"/>
+          <rect x="0" y="24" width="1" height="1"/>
+          <rect x="1" y="18" width="1" height="1"/>
+          <rect x="1" y="19" width="1" height="1"/>
+          <rect x="1" y="20" width="1" height="1"/>
+          <rect x="1" y="21" width="1" height="1"/>
+          <rect x="1" y="22" width="1" height="1"/>
+          <rect x="1" y="23" width="1" height="1"/>
+          <rect x="1" y="24" width="1" height="1"/>
+          <rect x="2" y="18" width="1" height="1"/>
+          <rect x="2" y="19" width="1" height="1"/>
+          <rect x="2" y="20" width="1" height="1"/>
+          <rect x="2" y="21" width="1" height="1"/>
+          <rect x="2" y="22" width="1" height="1"/>
+          <rect x="2" y="23" width="1" height="1"/>
+          <rect x="2" y="24" width="1" height="1"/>
+          <rect x="3" y="18" width="1" height="1"/>
+          <rect x="3" y="19" width="1" height="1"/>
+          <rect x="3" y="20" width="1" height="1"/>
+          <rect x="3" y="21" width="1" height="1"/>
+          <rect x="3" y="22" width="1" height="1"/>
+          <rect x="3" y="23" width="1" height="1"/>
+          <rect x="3" y="24" width="1" height="1"/>
+          <rect x="4" y="18" width="1" height="1"/>
+          <rect x="4" y="19" width="1" height="1"/>
+          <rect x="4" y="20" width="1" height="1"/>
+          <rect x="4" y="21" width="1" height="1"/>
+          <rect x="4" y="22" width="1" height="1"/>
+          <rect x="4" y="23" width="1" height="1"/>
+          <rect x="4" y="24" width="1" height="1"/>
+          <rect x="5" y="18" width="1" height="1"/>
+          <rect x="5" y="19" width="1" height="1"/>
+          <rect x="5" y="20" width="1" height="1"/>
+          <rect x="5" y="21" width="1" height="1"/>
+          <rect x="5" y="22" width="1" height="1"/>
+          <rect x="5" y="23" width="1" height="1"/>
+          <rect x="5" y="24" width="1" height="1"/>
+          <rect x="6" y="18" width="1" height="1"/>
+          <rect x="6" y="19" width="1" height="1"/>
+          <rect x="6" y="20" width="1" height="1"/>
+          <rect x="6" y="21" width="1" height="1"/>
+          <rect x="6" y="22" width="1" height="1"/>
+          <rect x="6" y="23" width="1" height="1"/>
+          <rect x="6" y="24" width="1" height="1"/>
+          <rect x="2" y="2" width="1" height="1" fill="#fff"/>
+          <rect x="2" y="3" width="1" height="1" fill="#fff"/>
+          <rect x="2" y="4" width="1" height="1" fill="#fff"/>
+          <rect x="3" y="2" width="1" height="1" fill="#fff"/>
+          <rect x="3" y="3" width="1" height="1" fill="#fff"/>
+          <rect x="3" y="4" width="1" height="1" fill="#fff"/>
+          <rect x="4" y="2" width="1" height="1" fill="#fff"/>
+          <rect x="4" y="3" width="1" height="1" fill="#fff"/>
+          <rect x="4" y="4" width="1" height="1" fill="#fff"/>
+          <rect x="20" y="2" width="1" height="1" fill="#fff"/>
+          <rect x="20" y="3" width="1" height="1" fill="#fff"/>
+          <rect x="20" y="4" width="1" height="1" fill="#fff"/>
+          <rect x="21" y="2" width="1" height="1" fill="#fff"/>
+          <rect x="21" y="3" width="1" height="1" fill="#fff"/>
+          <rect x="21" y="4" width="1" height="1" fill="#fff"/>
+          <rect x="22" y="2" width="1" height="1" fill="#fff"/>
+          <rect x="22" y="3" width="1" height="1" fill="#fff"/>
+          <rect x="22" y="4" width="1" height="1" fill="#fff"/>
+          <rect x="2" y="20" width="1" height="1" fill="#fff"/>
+          <rect x="2" y="21" width="1" height="1" fill="#fff"/>
+          <rect x="2" y="22" width="1" height="1" fill="#fff"/>
+          <rect x="3" y="20" width="1" height="1" fill="#fff"/>
+          <rect x="3" y="21" width="1" height="1" fill="#fff"/>
+          <rect x="3" y="22" width="1" height="1" fill="#fff"/>
+          <rect x="4" y="20" width="1" height="1" fill="#fff"/>
+          <rect x="4" y="21" width="1" height="1" fill="#fff"/>
+          <rect x="4" y="22" width="1" height="1" fill="#fff"/>
+          <rect x="7" y="0" width="1" height="1"/>
+          <rect x="10" y="0" width="1" height="1"/>
+          <rect x="14" y="0" width="1" height="1"/>
+          <rect x="15" y="0" width="1" height="1"/>
+          <rect x="17" y="0" width="1" height="1"/>
+          <rect x="7" y="1" width="1" height="1"/>
+          <rect x="8" y="1" width="1" height="1"/>
+          <rect x="12" y="1" width="1" height="1"/>
+          <rect x="13" y="1" width="1" height="1"/>
+          <rect x="16" y="1" width="1" height="1"/>
+          <rect x="8" y="2" width="1" height="1"/>
+          <rect x="17" y="2" width="1" height="1"/>
+          <rect x="7" y="3" width="1" height="1"/>
+          <rect x="8" y="3" width="1" height="1"/>
+          <rect x="10" y="3" width="1" height="1"/>
+          <rect x="11" y="3" width="1" height="1"/>
+          <rect x="15" y="3" width="1" height="1"/>
+          <rect x="8" y="4" width="1" height="1"/>
+          <rect x="9" y="4" width="1" height="1"/>
+          <rect x="10" y="4" width="1" height="1"/>
+          <rect x="15" y="4" width="1" height="1"/>
+          <rect x="10" y="5" width="1" height="1"/>
+          <rect x="15" y="5" width="1" height="1"/>
+          <rect x="16" y="5" width="1" height="1"/>
+          <rect x="17" y="5" width="1" height="1"/>
+          <rect x="9" y="6" width="1" height="1"/>
+          <rect x="10" y="6" width="1" height="1"/>
+          <rect x="11" y="6" width="1" height="1"/>
+          <rect x="13" y="6" width="1" height="1"/>
+          <rect x="14" y="6" width="1" height="1"/>
+          <rect x="2" y="7" width="1" height="1"/>
+          <rect x="3" y="7" width="1" height="1"/>
+          <rect x="4" y="7" width="1" height="1"/>
+          <rect x="5" y="7" width="1" height="1"/>
+          <rect x="7" y="7" width="1" height="1"/>
+          <rect x="10" y="7" width="1" height="1"/>
+          <rect x="12" y="7" width="1" height="1"/>
+          <rect x="14" y="7" width="1" height="1"/>
+          <rect x="17" y="7" width="1" height="1"/>
+          <rect x="21" y="7" width="1" height="1"/>
+          <rect x="23" y="7" width="1" height="1"/>
+          <rect x="24" y="7" width="1" height="1"/>
+          <rect x="1" y="8" width="1" height="1"/>
+          <rect x="2" y="8" width="1" height="1"/>
+          <rect x="6" y="8" width="1" height="1"/>
+          <rect x="7" y="8" width="1" height="1"/>
+          <rect x="12" y="8" width="1" height="1"/>
+          <rect x="13" y="8" width="1" height="1"/>
+          <rect x="14" y="8" width="1" height="1"/>
+          <rect x="17" y="8" width="1" height="1"/>
+          <rect x="18" y="8" width="1" height="1"/>
+          <rect x="19" y="8" width="1" height="1"/>
+          <rect x="21" y="8" width="1" height="1"/>
+          <rect x="2" y="9" width="1" height="1"/>
+          <rect x="3" y="9" width="1" height="1"/>
+          <rect x="10" y="9" width="1" height="1"/>
+          <rect x="13" y="9" width="1" height="1"/>
+          <rect x="15" y="9" width="1" height="1"/>
+          <rect x="18" y="9" width="1" height="1"/>
+          <rect x="19" y="9" width="1" height="1"/>
+          <rect x="20" y="9" width="1" height="1"/>
+          <rect x="21" y="9" width="1" height="1"/>
+          <rect x="22" y="9" width="1" height="1"/>
+          <rect x="23" y="9" width="1" height="1"/>
+          <rect x="24" y="9" width="1" height="1"/>
+          <rect x="3" y="10" width="1" height="1"/>
+          <rect x="5" y="10" width="1" height="1"/>
+          <rect x="6" y="10" width="1" height="1"/>
+          <rect x="12" y="10" width="1" height="1"/>
+          <rect x="14" y="10" width="1" height="1"/>
+          <rect x="17" y="10" width="1" height="1"/>
+          <rect x="22" y="10" width="1" height="1"/>
+          <rect x="1" y="11" width="1" height="1"/>
+          <rect x="2" y="11" width="1" height="1"/>
+          <rect x="3" y="11" width="1" height="1"/>
+          <rect x="4" y="11" width="1" height="1"/>
+          <rect x="7" y="11" width="1" height="1"/>
+          <rect x="10" y="11" width="1" height="1"/>
+          <rect x="16" y="11" width="1" height="1"/>
+          <rect x="18" y="11" width="1" height="1"/>
+          <rect x="20" y="11" width="1" height="1"/>
+          <rect x="21" y="11" width="1" height="1"/>
+          <rect x="2" y="12" width="1" height="1"/>
+          <rect x="3" y="12" width="1" height="1"/>
+          <rect x="4" y="12" width="1" height="1"/>
+          <rect x="7" y="12" width="1" height="1"/>
+          <rect x="8" y="12" width="1" height="1"/>
+          <rect x="9" y="12" width="1" height="1"/>
+          <rect x="11" y="12" width="1" height="1"/>
+          <rect x="13" y="12" width="1" height="1"/>
+          <rect x="14" y="12" width="1" height="1"/>
+          <rect x="15" y="12" width="1" height="1"/>
+          <rect x="17" y="12" width="1" height="1"/>
+          <rect x="18" y="12" width="1" height="1"/>
+          <rect x="21" y="12" width="1" height="1"/>
+          <rect x="1" y="13" width="1" height="1"/>
+          <rect x="3" y="13" width="1" height="1"/>
+          <rect x="4" y="13" width="1" height="1"/>
+          <rect x="5" y="13" width="1" height="1"/>
+          <rect x="8" y="13" width="1" height="1"/>
+          <rect x="10" y="13" width="1" height="1"/>
+          <rect x="12" y="13" width="1" height="1"/>
+          <rect x="14" y="13" width="1" height="1"/>
+          <rect x="16" y="13" width="1" height="1"/>
+          <rect x="17" y="13" width="1" height="1"/>
+          <rect x="18" y="13" width="1" height="1"/>
+          <rect x="19" y="13" width="1" height="1"/>
+          <rect x="20" y="13" width="1" height="1"/>
+          <rect x="21" y="13" width="1" height="1"/>
+          <rect x="22" y="13" width="1" height="1"/>
+          <rect x="23" y="13" width="1" height="1"/>
+          <rect x="2" y="14" width="1" height="1"/>
+          <rect x="3" y="14" width="1" height="1"/>
+          <rect x="5" y="14" width="1" height="1"/>
+          <rect x="6" y="14" width="1" height="1"/>
+          <rect x="9" y="14" width="1" height="1"/>
+          <rect x="10" y="14" width="1" height="1"/>
+          <rect x="11" y="14" width="1" height="1"/>
+          <rect x="12" y="14" width="1" height="1"/>
+          <rect x="16" y="14" width="1" height="1"/>
+          <rect x="17" y="14" width="1" height="1"/>
+          <rect x="18" y="14" width="1" height="1"/>
+          <rect x="19" y="14" width="1" height="1"/>
+          <rect x="20" y="14" width="1" height="1"/>
+          <rect x="0" y="15" width="1" height="1"/>
+          <rect x="1" y="15" width="1" height="1"/>
+          <rect x="2" y="15" width="1" height="1"/>
+          <rect x="6" y="15" width="1" height="1"/>
+          <rect x="8" y="15" width="1" height="1"/>
+          <rect x="9" y="15" width="1" height="1"/>
+          <rect x="11" y="15" width="1" height="1"/>
+          <rect x="13" y="15" width="1" height="1"/>
+          <rect x="17" y="15" width="1" height="1"/>
+          <rect x="18" y="15" width="1" height="1"/>
+          <rect x="19" y="15" width="1" height="1"/>
+          <rect x="20" y="15" width="1" height="1"/>
+          <rect x="22" y="15" width="1" height="1"/>
+          <rect x="24" y="15" width="1" height="1"/>
+          <rect x="0" y="16" width="1" height="1"/>
+          <rect x="1" y="16" width="1" height="1"/>
+          <rect x="4" y="16" width="1" height="1"/>
+          <rect x="9" y="16" width="1" height="1"/>
+          <rect x="10" y="16" width="1" height="1"/>
+          <rect x="17" y="16" width="1" height="1"/>
+          <rect x="21" y="16" width="1" height="1"/>
+          <rect x="22" y="16" width="1" height="1"/>
+          <rect x="23" y="16" width="1" height="1"/>
+          <rect x="24" y="16" width="1" height="1"/>
+          <rect x="1" y="17" width="1" height="1"/>
+          <rect x="5" y="17" width="1" height="1"/>
+          <rect x="6" y="17" width="1" height="1"/>
+          <rect x="7" y="17" width="1" height="1"/>
+          <rect x="9" y="17" width="1" height="1"/>
+          <rect x="10" y="17" width="1" height="1"/>
+          <rect x="11" y="17" width="1" height="1"/>
+          <rect x="12" y="17" width="1" height="1"/>
+          <rect x="13" y="17" width="1" height="1"/>
+          <rect x="15" y="17" width="1" height="1"/>
+          <rect x="19" y="17" width="1" height="1"/>
+          <rect x="20" y="17" width="1" height="1"/>
+          <rect x="21" y="17" width="1" height="1"/>
+          <rect x="7" y="18" width="1" height="1"/>
+          <rect x="9" y="18" width="1" height="1"/>
+          <rect x="11" y="18" width="1" height="1"/>
+          <rect x="15" y="18" width="1" height="1"/>
+          <rect x="16" y="18" width="1" height="1"/>
+          <rect x="17" y="18" width="1" height="1"/>
+          <rect x="19" y="18" width="1" height="1"/>
+          <rect x="22" y="18" width="1" height="1"/>
+          <rect x="7" y="19" width="1" height="1"/>
+          <rect x="12" y="19" width="1" height="1"/>
+          <rect x="13" y="19" width="1" height="1"/>
+          <rect x="15" y="19" width="1" height="1"/>
+          <rect x="16" y="19" width="1" height="1"/>
+          <rect x="18" y="19" width="1" height="1"/>
+          <rect x="22" y="19" width="1" height="1"/>
+          <rect x="24" y="19" width="1" height="1"/>
+          <rect x="7" y="20" width="1" height="1"/>
+          <rect x="8" y="20" width="1" height="1"/>
+          <rect x="10" y="20" width="1" height="1"/>
+          <rect x="11" y="20" width="1" height="1"/>
+          <rect x="17" y="20" width="1" height="1"/>
+          <rect x="18" y="20" width="1" height="1"/>
+          <rect x="23" y="20" width="1" height="1"/>
+          <rect x="24" y="20" width="1" height="1"/>
+          <rect x="7" y="21" width="1" height="1"/>
+          <rect x="10" y="21" width="1" height="1"/>
+          <rect x="14" y="21" width="1" height="1"/>
+          <rect x="17" y="21" width="1" height="1"/>
+          <rect x="19" y="21" width="1" height="1"/>
+          <rect x="21" y="21" width="1" height="1"/>
+          <rect x="23" y="21" width="1" height="1"/>
+          <rect x="24" y="21" width="1" height="1"/>
+          <rect x="8" y="22" width="1" height="1"/>
+          <rect x="9" y="22" width="1" height="1"/>
+          <rect x="13" y="22" width="1" height="1"/>
+          <rect x="15" y="22" width="1" height="1"/>
+          <rect x="18" y="22" width="1" height="1"/>
+          <rect x="19" y="22" width="1" height="1"/>
+          <rect x="21" y="22" width="1" height="1"/>
+          <rect x="22" y="22" width="1" height="1"/>
+          <rect x="24" y="22" width="1" height="1"/>
+          <rect x="7" y="23" width="1" height="1"/>
+          <rect x="8" y="23" width="1" height="1"/>
+          <rect x="10" y="23" width="1" height="1"/>
+          <rect x="12" y="23" width="1" height="1"/>
+          <rect x="14" y="23" width="1" height="1"/>
+          <rect x="16" y="23" width="1" height="1"/>
+          <rect x="17" y="23" width="1" height="1"/>
+          <rect x="18" y="23" width="1" height="1"/>
+          <rect x="22" y="23" width="1" height="1"/>
+          <rect x="23" y="23" width="1" height="1"/>
+          <rect x="24" y="23" width="1" height="1"/>
+          <rect x="12" y="24" width="1" height="1"/>
+          <rect x="13" y="24" width="1" height="1"/>
+          <rect x="14" y="24" width="1" height="1"/>
+          <rect x="15" y="24" width="1" height="1"/>
+          <rect x="16" y="24" width="1" height="1"/>
+          <rect x="17" y="24" width="1" height="1"/>
+          <rect x="18" y="24" width="1" height="1"/>
+          <rect x="19" y="24" width="1" height="1"/>
+          <rect x="20" y="24" width="1" height="1"/>
+          <rect x="22" y="24" width="1" height="1"/>
+          <rect x="23" y="24" width="1" height="1"/>
+          <rect x="16" y="16" width="1" height="1"/>
+          <rect x="16" y="17" width="1" height="1"/>
+          <rect x="16" y="18" width="1" height="1"/>
+          <rect x="17" y="16" width="1" height="1"/>
+          <rect x="18" y="16" width="1" height="1"/>
+          <rect x="17" y="18" width="1" height="1"/>
+          <rect x="18" y="18" width="1" height="1"/>
+          </g>
+        </svg>
+      </div>
+      <div class="contact-wechat"><span>微信号:</span><span id="wechatId">deep_codeplayer</span></div>
+      <p class="contact-hint">添加时请备注"上新监控"</p>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    上新监控 v2.0.8<span class="footer-sep">·</span>安全传输<span class="footer-sep">·</span>会话加密<span class="footer-sep">·</span>多设备管理
+  </footer>
+  <script>
+  (function () {
+    document.documentElement.classList.add('js-ready');
+    // Config: edit here to swap identity / contact
+    var WECHAT_ID = 'deep_codeplayer';
+    var QR_IMAGE = 'assets/wechat-qr.png';
+
+    var wechatEl = document.getElementById('wechatId');
+    var qrEl = document.getElementById('qrImage');
+    if (wechatEl) wechatEl.textContent = WECHAT_ID;
+    if (qrEl) qrEl.src = QR_IMAGE;
+    // Header scroll swap
+    var header = document.getElementById('header');
+    var darkBand = document.querySelector('.hero-band');
+    function onScrollHeader() {
+      if (!header || !darkBand) return;
+      var bandBottom = darkBand.getBoundingClientRect().bottom;
+      if (bandBottom <= 72) {
+        header.classList.remove('header--hero');
+        header.classList.add('header--solid');
+      } else {
+        header.classList.add('header--hero');
+        header.classList.remove('header--solid');
+      }
+    }
+    window.addEventListener('scroll', onScrollHeader, { passive: true });
+    onScrollHeader();
+
+    // Reveal animation + stagger
+    var motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function applyStaggerDelays() {
+      var groups = document.querySelectorAll('.features-list, .hero-metrics, .steps-list, .pricing-grid, .mobile-ops-list, .push-card-rows');
+      groups.forEach(function (group) {
+        var items = group.querySelectorAll(':scope > .reveal, :scope > .step-item.reveal');
+        items.forEach(function (el, i) {
+          el.style.setProperty('--reveal-delay', (i * 0.08) + 's');
+        });
+      });
+    }
+    if (motionOk) {
+      applyStaggerDelays();
+      var els = document.querySelectorAll('.reveal');
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function (el) { observer.observe(el); });
+      // Safety net: any reveal still hidden after 1.5s (off-screen in headless, slow
+      // paints in real browsers, broken observers) gets force-revealed.
+      setTimeout(function () {
+        document.querySelectorAll('.reveal:not(.visible)').forEach(function (el) {
+          el.classList.add('visible');
+        });
+      }, 1500);
+    } else {
+      document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('visible'); });
+    }
+    // Phone scene cycle: dashboard <-> DingTalk
+    function initPhoneSceneCycle() {
+      var stage = document.getElementById('phoneScreenStage');
+      var wrap = document.getElementById('phoneTilt');
+      var mockPush = document.getElementById('mockPush');
+      if (!stage) return;
+      var panels = stage.querySelectorAll('.phone-panel');
+      var dots = document.querySelectorAll('.phone-scene-dot');
+      var timers = [];
+      var sceneIndex = 0;
+      var scenes = ['dashboard', 'dingtalk'];
+      var PUSH_DELAY = 1400;
+      var DASHBOARD_HOLD = 4200;
+      var DINGTALK_HOLD = 6800;
+      var SEND_DURATION = 980;
+
+      function clearTimers() { timers.forEach(function (id) { window.clearTimeout(id); }); timers = []; }
+      function later(fn, ms) { timers.push(window.setTimeout(fn, ms)); }
+
+      function lockStageHeight() {
+        var maxH = 0;
+        stage.style.height = 'auto';
+        stage.style.width = '100%';
+        function measurePanel(panel, sendDone) {
+          panel.classList.add('is-measure');
+          if (sendDone) panel.classList.add('is-send-done');
+          else panel.classList.remove('is-send-done');
+          var h = panel.offsetHeight;
+          panel.classList.remove('is-measure', 'is-send-done');
+          return h;
+        }
+        panels.forEach(function (panel) {
+          if (panel.getAttribute('data-scene') === 'dingtalk') {
+            maxH = Math.max(maxH, measurePanel(panel, false));
+            maxH = Math.max(maxH, measurePanel(panel, true));
+          } else {
+            maxH = Math.max(maxH, measurePanel(panel, false));
+          }
+        });
+        if (maxH > 0) stage.style.setProperty('--phone-stage-h', maxH + 'px');
+        stage.style.height = '';
+        stage.style.width = '';
+      }
+
+      function replayDashboardPush() {
+        if (!mockPush) return;
+        var items = mockPush.querySelectorAll('.mock-list-item');
+        items.forEach(function (it) { it.classList.remove('is-new'); });
+        window.requestAnimationFrame(function () {
+          later(function () {
+            items.forEach(function (it, idx) {
+              window.setTimeout(function () { it.classList.add('is-new'); }, idx * 180);
+            });
+          }, 120);
+        });
+      }
+
+      function resetDingtalkPanel(panel) {
+        if (!panel) return;
+        panel.classList.remove('is-animate', 'is-send-done');
+        var card = panel.querySelector('.mock-msg-card');
+        if (card) card.classList.remove('is-active');
+      }
+
+      function triggerDingtalkAnim() {
+        var panel = stage.querySelector('.phone-panel--dingtalk');
+        if (!panel) return;
+        resetDingtalkPanel(panel);
+        void panel.offsetWidth;
+        panel.classList.add('is-animate');
+        var card = panel.querySelector('.mock-msg-card');
+        if (card) card.classList.add('is-active');
+        later(function () { panel.classList.add('is-send-done'); }, SEND_DURATION);
+      }
+
+      function setScene(name) {
+        sceneIndex = scenes.indexOf(name);
+        if (sceneIndex < 0) sceneIndex = 0;
+        panels.forEach(function (panel) {
+          var active = panel.getAttribute('data-scene') === name;
+          panel.classList.toggle('is-active', active);
+          if (!active && panel.getAttribute('data-scene') === 'dingtalk') resetDingtalkPanel(panel);
+        });
+        dots.forEach(function (dot) {
+          dot.classList.toggle('is-active', dot.getAttribute('data-scene') === name);
+        });
+        if (wrap) wrap.classList.toggle('is-dingtalk-scene', name === 'dingtalk');
+        if (name === 'dingtalk') triggerDingtalkAnim();
+        if (name === 'dashboard') replayDashboardPush();
+      }
+
+      function toggleScene() {
+        sceneIndex = (sceneIndex + 1) % scenes.length;
+        setScene(scenes[sceneIndex]);
+      }
+
+      function startLoop() {
+        clearTimers();
+        lockStageHeight();
+        setScene('dashboard');
+        later(function () { setScene('dingtalk'); }, PUSH_DELAY + DASHBOARD_HOLD);
+        later(function () {
+          timers.push(window.setInterval(toggleScene, PUSH_DELAY + DASHBOARD_HOLD + DINGTALK_HOLD));
+        }, PUSH_DELAY + DASHBOARD_HOLD + DINGTALK_HOLD);
+      }
+
+      lockStageHeight();
+      window.addEventListener('resize', lockStageHeight);
+      window.requestAnimationFrame(lockStageHeight);
+      if (!motionOk) {
+        if (mockPush) mockPush.classList.add('is-show');
+        var dtPanel = stage.querySelector('.phone-panel--dingtalk');
+        if (dtPanel) dtPanel.classList.add('is-send-done');
+        var card = stage.querySelector('.mock-msg-card');
+        if (card) card.classList.add('is-active');
+        return;
+      }
+      startLoop();
+    }
+    initPhoneSceneCycle();
+    // Scroll progress bar
+    function initScrollProgress() {
+      var bar = document.getElementById('scrollProgressBar');
+      if (!bar) return;
+      function updateProgress() {
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        var max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+        bar.style.transform = 'scaleX(' + Math.min(1, scrollTop / max) + ')';
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+    }
+
+    // Hero parallax
+    function initHeroParallax() {
+      if (!motionOk) return;
+      var band = document.querySelector('.hero-band');
+      var bg = document.getElementById('heroBandBg');
+      var grid = document.getElementById('heroBandGrid');
+      if (!band || !bg) return;
+      function updateParallax() {
+        var rect = band.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        var p = Math.min(1, Math.max(0, -rect.top / Math.max(rect.height, 1)));
+        bg.style.transform = 'translate3d(0, ' + (p * 36) + 'px, 0)';
+        if (grid) grid.style.transform = 'translate3d(0, ' + (p * 52) + 'px, 0)';
+      }
+      window.addEventListener('scroll', updateParallax, { passive: true });
+      updateParallax();
+    }
+
+    // Magnetic buttons (fine pointer only)
+    function initMagneticButtons() {
+      if (!motionOk) return;
+      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (!finePointer) return;
+      document.querySelectorAll('.magnetic').forEach(function (btn) {
+        btn.addEventListener('mousemove', function (e) {
+          var rect = btn.getBoundingClientRect();
+          var x = (e.clientX - rect.left - rect.width / 2) * 0.14;
+          var y = (e.clientY - rect.top - rect.height / 2) * 0.18;
+          btn.style.transform = 'translate(' + x.toFixed(1) + 'px, ' + y.toFixed(1) + 'px)';
+        });
+        btn.addEventListener('mouseleave', function () { btn.style.transform = ''; });
+      });
+    }
+
+    initScrollProgress();
+    initHeroParallax();
+    initMagneticButtons();
+    // Mobile ops hover sync: list -> push card rows
+    function initMobileOpsSync() {
+      var listWrap = document.getElementById('mobileOpsList');
+      if (!listWrap) return;
+      var items = listWrap.querySelectorAll('.mobile-ops-item[data-target]');
+      var rows = document.querySelectorAll('#pushCardMock [data-action]');
+      var taskTargets = ['task-start', 'task-pause', 'task-pause-all'];
+
+      function setActive(key) {
+        items.forEach(function (el) {
+          var target = el.getAttribute('data-target') || '';
+          el.classList.toggle('is-active', target === key);
+        });
+        rows.forEach(function (el) {
+          var action = el.getAttribute('data-action') || '';
+          var highlight = action === key;
+          if (key === 'task-start' && taskTargets.indexOf(action) >= 0) highlight = true;
+          el.classList.toggle('is-highlight', highlight);
+        });
+      }
+
+      items.forEach(function (el) {
+        el.addEventListener('mouseenter', function () { setActive(el.getAttribute('data-target') || ''); });
+      });
+      listWrap.addEventListener('mouseleave', function () { setActive(''); });
+    }
+    initMobileOpsSync();
+
+    // Phone 3D tilt
+    function initPhoneTilt() {
+      var wrap = document.getElementById('phoneTilt');
+      var phone = document.getElementById('phone3d');
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (!wrap || !phone) return;
+      if (reduceMotion || !finePointer) return;
+
+      var maxTilt = 14;
+      var lift = 18;
+      var idleLift = 10;
+      var idle = { rx: -5, ry: 11, px: 58, py: 38 };
+      var rafId = 0;
+      var active = false;
+      var target = { rx: idle.rx, ry: idle.ry, px: idle.px, py: idle.py };
+      var current = { rx: 0, ry: 0, px: 50, py: 50 };
+      var glow = wrap.querySelector('.phone-glow');
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function applyFrame() {
+        current.rx = lerp(current.rx, target.rx, active ? 0.14 : 0.08);
+        current.ry = lerp(current.ry, target.ry, active ? 0.14 : 0.08);
+        current.px = lerp(current.px, target.px, 0.14);
+        current.py = lerp(current.py, target.py, 0.14);
+
+        phone.style.transform =
+          'rotateX(' + current.rx.toFixed(2) + 'deg) rotateY(' + current.ry.toFixed(2) + 'deg) translateZ(' + (active ? lift : idleLift) + 'px)';
+
+        if (glow) {
+          var gx = (current.ry / maxTilt) * 20;
+          var gy = (current.rx / maxTilt) * 20;
+          glow.style.transform = 'translate(calc(-50% + ' + gx.toFixed(1) + 'px), calc(-50% + ' + gy.toFixed(1) + 'px))';
+        }
+
+        var settled =
+          Math.abs(current.rx - target.rx) < 0.05 &&
+          Math.abs(current.ry - target.ry) < 0.05;
+        if (active || !settled) rafId = requestAnimationFrame(applyFrame);
+        else rafId = 0;
+      }
+      function startFrame() { if (!rafId) rafId = requestAnimationFrame(applyFrame); }
+
+      function setIdlePose() {
+        active = false;
+        target.rx = idle.rx; target.ry = idle.ry; target.px = idle.px; target.py = idle.py;
+        wrap.classList.remove('is-active');
+        startFrame();
+      }
+
+      wrap.addEventListener('mousemove', function (e) {
+        var rect = wrap.getBoundingClientRect();
+        var nx = (e.clientX - rect.left) / rect.width;
+        var ny = (e.clientY - rect.top) / rect.height;
+        target.ry = (nx - 0.5) * maxTilt * 2;
+        target.rx = -(ny - 0.5) * maxTilt * 2;
+        target.px = nx * 100;
+        target.py = ny * 100;
+        active = true;
+        wrap.classList.add('is-active');
+        startFrame();
+      });
+      wrap.addEventListener('mouseleave', setIdlePose);
+      wrap.classList.add('is-idle-tilt');
+      startFrame();
+    }
+    initPhoneTilt();
+  })();
+  </script></body>
+</html>
