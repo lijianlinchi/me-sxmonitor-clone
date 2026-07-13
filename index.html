@@ -105,6 +105,10 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
    HERO BAND + HERO
    ============================================================= */
 .hero-band{position:relative;background:var(--bg);color:#fff;overflow:hidden}
+.aurora-layer{position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.55;overflow:hidden}
+.aurora-layer canvas{position:absolute;inset:0;width:100% !important;height:100% !important;display:block}
+@media (hover:none),(pointer:coarse){.aurora-layer{display:none}}
+@media (prefers-reduced-motion:reduce){.aurora-layer{display:none}}
 .hero-band-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 20%,oklch(0.918 0.182 102 / 0.10) 0%,transparent 55%),radial-gradient(ellipse 50% 40% at 10% 80%,oklch(0.918 0.182 102 / 0.06) 0%,transparent 50%),linear-gradient(165deg,oklch(0.115 0.014 264) 0%,oklch(0.135 0.015 263) 45%,oklch(0.122 0.014 264) 100%);pointer-events:none;will-change:transform}
 .hero-band-grid{position:absolute;inset:0;background-image:linear-gradient(oklch(1 0 0 / 0.04) 1px,transparent 1px),linear-gradient(90deg,oklch(1 0 0 / 0.04) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.6) 0%,rgba(0,0,0,.3) 70%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.6) 0%,rgba(0,0,0,.3) 70%,transparent 100%);pointer-events:none;will-change:transform}
 .hero-band-orbs{position:absolute;inset:0;pointer-events:none;overflow:hidden}
@@ -548,6 +552,7 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
 
   <!-- ===== Hero band ===== -->
   <div class="hero-band" id="top">
+    <div class="aurora-layer" id="auroraHero" aria-hidden="true"></div>
     <div class="hero-band-bg" id="heroBandBg" aria-hidden="true"></div>
     <div class="hero-band-grid" id="heroBandGrid" aria-hidden="true"></div>
     <div class="hero-band-orbs" aria-hidden="true">
@@ -1464,5 +1469,8 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
     }
     setupBorderGlow();
   })();
-  </script></body>
+  </script>
+  <!-- Aurora hero background (ES module, loads ogl from CDN) -->
+  <script type="module" src="assets/aurora.js"></script>
+  </body>
 </html>
