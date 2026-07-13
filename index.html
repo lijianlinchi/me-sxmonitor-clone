@@ -337,12 +337,16 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
 .features{padding-top:clamp(80px,9vw,120px);padding-bottom:clamp(80px,9vw,120px)}
 .features-head{margin-bottom:clamp(40px,5vw,64px)}
 .features-list{display:flex;flex-direction:column;gap:clamp(36px,4vw,56px)}
-.feature-row{display:grid;grid-template-columns:72px 1fr;gap:24px;align-items:start}
-.feature-row-icon{width:56px;height:56px;border-radius:14px;background:var(--surface);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:800;color:var(--primary);letter-spacing:-0.02em;flex-shrink:0}
+.feature-row{display:grid;grid-template-columns:32px 72px 1fr;column-gap:24px;align-items:start;position:relative;padding:4px 0 4px 0}
+.feature-row-icon{width:64px;height:64px;border-radius:16px;background:linear-gradient(180deg,oklch(0.19 0.014 263) 0%,oklch(0.155 0.013 263) 100%);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:800;color:var(--primary);letter-spacing:-0.02em;flex-shrink:0;position:relative;transition:border-color .3s ease,box-shadow .3s ease,transform .3s ease,color .3s ease}
 .feature-row-text{max-width:620px}
 .feature-row-num{display:block;font-family:var(--font-mono);font-size:var(--fs-xs);font-weight:700;color:var(--ink-subtle);letter-spacing:0.08em;margin-bottom:8px}
 .feature-row-title{font-size:var(--fs-xl);font-weight:700;color:#fff;line-height:var(--leading-snug);margin-bottom:10px;letter-spacing:-0.01em}
 .feature-row-desc{font-size:var(--fs-base);color:var(--ink-muted);line-height:var(--leading-relaxed)}
+.feature-row-seq{font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--primary);opacity:.45;text-align:center;padding-top:22px;letter-spacing:.02em;transition:opacity .3s ease,color .3s ease}
+.feature-row:hover .feature-row-seq{opacity:1;color:var(--primary)}
+.feature-row:hover .feature-row-icon{border-color:oklch(0.918 0.182 102 / .55);box-shadow:0 0 24px var(--primary-glow),inset 0 0 12px oklch(0.918 0.182 102 / .08);transform:translateY(-2px)}
+.feature-row:not(:last-child)::after{content:"";position:absolute;left:15px;top:48px;height:calc(100% + 32px);width:1px;background:linear-gradient(180deg,oklch(1 0 0 / 0) 0%,oklch(1 0 0 / .12) 30%,oklch(1 0 0 / .12) 70%,oklch(1 0 0 / 0) 100%)}
 
 /* =============================================================
    MOBILE OPS
@@ -468,6 +472,8 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
   .pricing-grid{grid-template-columns:repeat(2,1fr)}
   .feature-row{grid-template-columns:56px 1fr;gap:18px}
   .feature-row-icon{width:48px;height:48px;font-size:var(--fs-xs)}
+  .feature-row-seq{display:none}
+  .feature-row::after{display:none}
 }
 @media (max-width:640px){
   .nav a:not(.nav-cta){display:none}
@@ -718,6 +724,8 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
     </header>
     <ol class="features-list" role="list">
       <li class="feature-row reveal">
+        <span class="feature-row-seq" aria-hidden="true">01</span>
+
         <div class="feature-row-icon" aria-hidden="true">3s</div>
         <div class="feature-row-text">
           <span class="feature-row-num">CAPABILITY / 01</span>
@@ -726,6 +734,8 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
         </div>
       </li>
       <li class="feature-row reveal">
+        <span class="feature-row-seq" aria-hidden="true">02</span>
+
         <div class="feature-row-icon" aria-hidden="true">YEN</div>
         <div class="feature-row-text">
           <span class="feature-row-num">CAPABILITY / 02</span>
@@ -734,6 +744,8 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
         </div>
       </li>
       <li class="feature-row reveal">
+        <span class="feature-row-seq" aria-hidden="true">03</span>
+
         <div class="feature-row-icon" aria-hidden="true">PUSH</div>
         <div class="feature-row-text">
           <span class="feature-row-num">CAPABILITY / 03</span>
@@ -742,6 +754,8 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
         </div>
       </li>
       <li class="feature-row reveal">
+        <span class="feature-row-seq" aria-hidden="true">04</span>
+
         <div class="feature-row-icon" aria-hidden="true">MOB</div>
         <div class="feature-row-text">
           <span class="feature-row-num">CAPABILITY / 04</span>
@@ -750,6 +764,8 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
         </div>
       </li>
       <li class="feature-row reveal">
+        <span class="feature-row-seq" aria-hidden="true">05</span>
+
         <div class="feature-row-icon" aria-hidden="true">LOCK</div>
         <div class="feature-row-text">
           <span class="feature-row-num">CAPABILITY / 05</span>
