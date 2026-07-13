@@ -380,6 +380,8 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
 .steps-head{margin-bottom:clamp(40px,5vw,64px)}
 .steps-list{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;counter-reset:step}
 .step-item.border-glow-card>.step-num,.step-item.border-glow-card>div{position:relative;z-index:1}
+    /* v1.4.7b: exclude .edge-light (and .pricing-badge) so the cone glow stays position:absolute and renders correctly; v1.4.5 used a whitelist pattern for step-item that avoided this issue. */
+    .pricing-card.border-glow-card>*:not(.edge-light):not(.pricing-badge),.push-card.border-glow-card>*:not(.edge-light){position:relative;z-index:1}
 .step-item{counter-increment:step;display:grid;grid-template-columns:64px 1fr;gap:20px;align-items:start;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);transition:border-color 0.3s ease,transform 0.3s ease}
 .step-item:hover{border-color:var(--border-strong);transform:translateY(-2px)}
 .step-num{font-family:var(--font-mono);font-size:var(--fs-2xl);font-weight:800;color:var(--primary);letter-spacing:-0.02em;line-height:1}
@@ -780,7 +782,7 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
             <p class="mobile-ops-desc">命中推送直接点开,几秒内完成下单;不必再回到电脑端。</p>
             <span class="mobile-ops-arrow">→</span>
           </li>
-        </ul>        <aside class="push-card reveal" id="pushCardMock">
+        </ul>        <aside class="push-card reveal border-glow-card is-block" id="pushCardMock" style="--card-bg:var(--surface-elevated)">
           <div class="push-card-title">实时推送预览</div>
           <div class="push-card-rows">
             <div class="push-card-row" data-action="task-start">
@@ -816,6 +818,7 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
               <span class="push-card-row-btn">查看</span>
             </div>
           </div>
+        <span class="edge-light"></span>
         </aside>
       </div>
     </div>
@@ -877,30 +880,30 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
             <h3 class="pricing-edition-title">手机端云端监控 · 即开即用</h3>
             <p class="pricing-edition-desc">免挂机,7×24 小时云端运行;手机端随时启停,推送秒级触达。</p>
           </div>          <div class="pricing-grid">
-            <div class="pricing-card reveal">
+            <div class="pricing-card reveal border-glow-card is-block" style="--card-bg:var(--bg)">
               <div class="pricing-name">日卡</div>
               <div class="pricing-price">28<small>元</small></div>
               <div class="pricing-daily">按天体验</div>
-              <p class="pricing-note">功能完整 · 低价入门</p>
+              <p class="pricing-note">功能完整 · 低价入门</p><span class="edge-light"></span>
             </div>
-            <div class="pricing-card reveal">
+            <div class="pricing-card reveal border-glow-card is-block" style="--card-bg:var(--bg)">
               <div class="pricing-name">月卡</div>
               <div class="pricing-price">158<small>元</small></div>
               <div class="pricing-daily">约 ¥5.3 / 天</div>
-              <p class="pricing-note">日常监控 · 灵活续费</p>
+              <p class="pricing-note">日常监控 · 灵活续费</p><span class="edge-light"></span>
             </div>
-            <div class="pricing-card reveal">
+            <div class="pricing-card reveal border-glow-card is-block" style="--card-bg:var(--bg)">
               <div class="pricing-name">季卡</div>
               <div class="pricing-price">418<small>元</small></div>
               <div class="pricing-daily">约 ¥4.6 / 天</div>
-              <p class="pricing-note">稳定使用 · 更省一点</p>
+              <p class="pricing-note">稳定使用 · 更省一点</p><span class="edge-light"></span>
             </div>
-            <div class="pricing-card pricing-card--featured reveal">
+            <div class="pricing-card pricing-card--featured reveal border-glow-card is-block" style="--card-bg:var(--bg)">
               <span class="pricing-badge">最省</span>
               <div class="pricing-name">年卡</div>
               <div class="pricing-price">1198<small>元</small></div>
               <div class="pricing-daily">约 ¥3.3 / 天</div>
-              <p class="pricing-note">长期盯货 · 单价最低</p>
+              <p class="pricing-note">长期盯货 · 单价最低</p><span class="edge-light"></span>
             </div>
           </div>
         </div>        <div class="pricing-edition pricing-edition--desktop reveal">
@@ -910,30 +913,30 @@ html.js-ready .hero-enter{animation:hero-enter 0.85s cubic-bezier(0.22,1,0.36,1)
             <p class="pricing-edition-desc">含手机端全部能力,并支持自动发消息;套餐价格低于云端版,客户端需一直保持运行。</p>
           </div>
           <div class="pricing-grid">
-            <div class="pricing-card reveal">
+            <div class="pricing-card reveal border-glow-card is-block" style="--card-bg:var(--bg)">
               <div class="pricing-name">日卡</div>
               <div class="pricing-price">18<small>元</small></div>
               <div class="pricing-daily">按天体验</div>
-              <p class="pricing-note">功能完整 · 低价入门</p>
+              <p class="pricing-note">功能完整 · 低价入门</p><span class="edge-light"></span>
             </div>
-            <div class="pricing-card reveal">
+            <div class="pricing-card reveal border-glow-card is-block" style="--card-bg:var(--bg)">
               <div class="pricing-name">月卡</div>
               <div class="pricing-price">128<small>元</small></div>
               <div class="pricing-daily">约 ¥4.3 / 天</div>
-              <p class="pricing-note">比云端版省 ¥30</p>
+              <p class="pricing-note">比云端版省 ¥30</p><span class="edge-light"></span>
             </div>
-            <div class="pricing-card reveal">
+            <div class="pricing-card reveal border-glow-card is-block" style="--card-bg:var(--bg)">
               <div class="pricing-name">季卡</div>
               <div class="pricing-price">328<small>元</small></div>
               <div class="pricing-daily">约 ¥3.6 / 天</div>
-              <p class="pricing-note">比云端版省 ¥90</p>
+              <p class="pricing-note">比云端版省 ¥90</p><span class="edge-light"></span>
             </div>
-            <div class="pricing-card pricing-card--featured reveal">
+            <div class="pricing-card pricing-card--featured reveal border-glow-card is-block" style="--card-bg:var(--bg)">
               <span class="pricing-badge">最省</span>
               <div class="pricing-name">年卡</div>
               <div class="pricing-price">988<small>元</small></div>
               <div class="pricing-daily">约 ¥2.7 / 天</div>
-              <p class="pricing-note">比云端版省 ¥210</p>
+              <p class="pricing-note">比云端版省 ¥210</p><span class="edge-light"></span>
             </div>
           </div>
           <p class="pricing-caveat"><strong>缺点:</strong>需保持电脑客户端运行(挂机);关机或退出程序后任务停止,不能运行;系统休眠仍可继续运行。</p>
